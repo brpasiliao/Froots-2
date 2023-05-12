@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StrawbertAnimation : MonoBehaviour {
-    Animator animator;
-
-    void Awake() {
-        animator = GetComponent<Animator>();
-    }
+    [SerializeField] Animator animator;
 
     void Update() {
-        Vector3 input = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
-        input.Normalize();
+        // animator.SetFloat("InputX", Input.GetAxisRaw("Horizontal"));
+        // animator.SetFloat("InputY", Input.GetAxisRaw("Vertical"));
 
-        animator.SetFloat("InputX", input.x);
-        animator.SetFloat("InputY", input.y);
+        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0) {
+            animator.SetBool("Moving", false);
+        } else {
+            animator.SetBool("Moving", true);
+            animator.SetFloat("InputX", Input.GetAxisRaw("Horizontal"));
+            animator.SetFloat("InputY", Input.GetAxisRaw("Vertical"));
+        }
     }
 }
