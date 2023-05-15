@@ -6,9 +6,6 @@ public class StrawbertAnimation : MonoBehaviour {
     [SerializeField] Animator animator;
 
     void Update() {
-        // animator.SetFloat("InputX", Input.GetAxisRaw("Horizontal"));
-        // animator.SetFloat("InputY", Input.GetAxisRaw("Vertical"));
-
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0) {
             animator.SetBool("Moving", false);
         } else {
