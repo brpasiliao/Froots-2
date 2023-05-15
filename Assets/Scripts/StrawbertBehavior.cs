@@ -6,14 +6,26 @@ public class StrawbertBehavior : MonoBehaviour {
     [SerializeField] Rigidbody2D rb;
     public float speed;
     Vector2 destination;
+    List<Collider2D> overlappingColliders = new List<Collider2D>();
 
     void Update() {
-        destination = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        rb.velocity = destination.normalized*speed;
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y/2);
+        Move();
+
+        if (Input.GetButtonDown("Fire1")) Interact();
     }
 
-    void OnCollisionEnter2D(Collision2D collision) {
-        Debug.Log(collision.gameObject.name);
+    void Move() {
+        destination = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        rb.velocity = destination.normalized*speed;
+        // transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y/2);
+    }
+
+    void Interact() {
+        rb.OverlapCollider(new ContactFilter2D().NoFilter(), overlappingColliders);
+        foreach (Collider2D collider in overlappingColliders) {
+            if (collider.TryGetComponent<Interactable>(out Interactable interactedObj)) {
+                interactedObj.PerformInteraction();
+            }
+        }
     }
 }
