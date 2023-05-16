@@ -2,17 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public static class Inventory {
+    public static List<GameObject> acorns = new List<GameObject>();
+    public static List<GameObject> springleaves = new List<GameObject>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

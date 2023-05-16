@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Springleaf : MonoBehaviour, IInteractable, ITaggable, IGrabbable {
     [SerializeField] Animator animator;
@@ -9,6 +10,8 @@ public class Springleaf : MonoBehaviour, IInteractable, ITaggable, IGrabbable {
     [SerializeField] int direction;     // 1=up, 2=right, 3=down, 4=left
     public static StrawbertBehavior strawbert;
     public bool IsTagged { get; set; }
+
+    public static event Action onSpringleafTag;
 
     void Awake() {
         strawbert = GameObject.FindWithTag("Player").GetComponent<StrawbertBehavior>();
@@ -44,7 +47,8 @@ public class Springleaf : MonoBehaviour, IInteractable, ITaggable, IGrabbable {
 
     public void GetTagged() {
         IsTagged = true;
-        Debug.Log("tagged!");
+        Inventory.springleaves.Add(gameObject);
+        onSpringleafTag?.Invoke();
     }
 
     public void Grab() {
