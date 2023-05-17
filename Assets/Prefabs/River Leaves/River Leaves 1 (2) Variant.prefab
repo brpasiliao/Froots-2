@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: River Leaves 1 (2) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4330726070579958969, guid: 7dba4aa6d10024194b5a0dc4e3c56bd0, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 756ecfccef4434fcf8a6ab55bf0ff975, type: 2}
     - target: {fileID: 6270947880516213051, guid: 7dba4aa6d10024194b5a0dc4e3c56bd0, type: 3}
       propertyPath: m_Sprite
       value: 
