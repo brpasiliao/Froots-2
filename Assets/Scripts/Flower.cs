@@ -7,7 +7,7 @@ public class Flower : MonoBehaviour {
     [SerializeField] Collider2D col;
    
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.TryGetComponent<IGrabbable>(out IGrabbable grabbedObj)) {
+        if (other.isTrigger && other.TryGetComponent<IGrabbable>(out IGrabbable grabbedObj)) {
             Debug.Log("grab");
 
             col.enabled = false;
