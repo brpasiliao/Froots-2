@@ -19,8 +19,9 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
     }
 
     public void GetTagged() {
+        Debug.Log("tagged!");
         IsTagged = true;
-        Inventory.acorns.Add(gameObject);
+        Inventory.acorns.Add(this);
         onAcornTag?.Invoke();
     }
 }

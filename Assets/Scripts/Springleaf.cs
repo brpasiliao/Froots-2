@@ -9,12 +9,15 @@ public class Springleaf : MonoBehaviour, IInteractable, ITaggable, IGrabbable {
     [SerializeField] GameObject flower;
     [SerializeField] int direction;     // 1=up, 2=right, 3=down, 4=left
     public static StrawbertBehavior strawbert;
+    public Pit pit;
+
     public bool IsTagged { get; set; }
 
     public static event Action onSpringleafTag;
 
     void Awake() {
         strawbert = GameObject.FindWithTag("Player").GetComponent<StrawbertBehavior>();
+        pit = transform.parent.GetComponent<Pit>();
         IsTagged = false;
     } 
 
@@ -33,7 +36,10 @@ public class Springleaf : MonoBehaviour, IInteractable, ITaggable, IGrabbable {
 
     public void PerformInteraction() {
         if (!IsTagged) GetTagged();
-        else Launch();
+        else {
+            if (Inventory.acorns.Count > 0) Launch();
+            else Debug.Log("not enough acorns!");
+        }
     }
 
     void Launch() {
@@ -46,8 +52,9 @@ public class Springleaf : MonoBehaviour, IInteractable, ITaggable, IGrabbable {
     }
 
     public void GetTagged() {
+        Debug.Log("tagged!");
         IsTagged = true;
-        Inventory.springleaves.Add(gameObject);
+        Inventory.springleaves.Add(this);
         onSpringleafTag?.Invoke();
     }
 
