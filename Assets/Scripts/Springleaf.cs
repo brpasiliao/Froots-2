@@ -119,7 +119,7 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
             if (collider.TryGetComponent<OakLeaves>(out OakLeaves oakLeaves)) {
                 acornAnim.SetActive(false);
                 acornSunk = true;
-                oakLeaves.gameObject.SetActive(false);
+                oakLeaves.Disperse();
             }
         }
     }

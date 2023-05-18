@@ -1,11 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class OakLeaves : MonoBehaviour {
-    // void OnTriggerEnter2D(Collider2D other) {
-    //     if (other.GetComponent<Acorn>() != null) {
-    //         gameObject.SetActive(false);
-    //     }
-    // }
+    [SerializeField] Collider2D col;
+    [SerializeField] SpriteRenderer sr;
+
+    public static event Action onClog;
+
+    bool isDispersed = false;
+
+    public void Spawn() {
+        col.enabled = true;
+        sr.enabled = true;
+        isDispersed = false;
+    }
+
+    public void Clog() {
+        if (!isDispersed) {
+            col.enabled = false;
+            onClog?.Invoke();
+        }
+    }
+
+    public void Disperse() {
+        col.enabled = false;
+        sr.enabled = false;
+        isDispersed = true;
+    }
+
 }
