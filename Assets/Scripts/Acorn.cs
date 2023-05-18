@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 
 public class Acorn : MonoBehaviour, IInteractable, ITaggable {
+    public GameObject sprite;
+
     public bool IsTagged { get; set; }
 
     public static event Action onAcornTag;
@@ -14,12 +16,12 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
 
     public void PerformInteraction() {
         if (!IsTagged) GetTagged();
-        else Debug.Log("already tagged!");
+        else Debug.Log("acorn already tagged!");
         // roll?
     }
 
     public void GetTagged() {
-        Debug.Log("tagged!");
+        Debug.Log("acorn tagged!");
         IsTagged = true;
         Inventory.acorns.Add(this);
         onAcornTag?.Invoke();

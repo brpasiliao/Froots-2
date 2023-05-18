@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Springleaf : MonoBehaviour, IInteractable, ITaggable, IGrabbable {
+public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     [SerializeField] Animator animator;
     [SerializeField] GameObject target;
     [SerializeField] GameObject flower;
+    [SerializeField] GameObject acornAnim;
     [SerializeField] int direction;     // 1=up, 2=right, 3=down, 4=left
     public static StrawbertBehavior strawbert;
-    public Pit pit;
 
-    public bool IsTagged { get; set; }
-
-    public static event Action onSpringleafTag;
+    bool hasAcorn = false;
+    bool acornSunk = false;
+    Acorn acornObj;
 
     void Awake() {
         strawbert = GameObject.FindWithTag("Player").GetComponent<StrawbertBehavior>();
-        pit = transform.parent.GetComponent<Pit>();
-        IsTagged = false;
     } 
 
     void Start() {
@@ -35,27 +33,43 @@ public class Springleaf : MonoBehaviour, IInteractable, ITaggable, IGrabbable {
     }
 
     public void PerformInteraction() {
-        if (!IsTagged) GetTagged();
-        else {
-            if (Inventory.acorns.Count > 0) Launch();
-            else Debug.Log("not enough acorns!");
+        if (!hasAcorn) {
+            if (Inventory.acorns.Count > 0) {
+                hasAcorn = true;
+                acornAnim.SetActive(true);
+                
+                acornObj = Inventory.acorns[0];
+                acornObj.gameObject.SetActive(false);
+                acornObj.transform.SetParent(transform);
+                Inventory.acorns.RemoveAt(0);
+            } else {
+                Debug.Log("not enough acorns!");
+            }
+        } else {
+            Launch();
         }
     }
 
     void Launch() {
-        if (!animator.GetBool("Launching"))
+        if (!animator.GetBool("Launching")) {
             animator.SetBool("Launching", true);
+            acornAnim.SetActive(true);
+            acornObj.gameObject.SetActive(false);
+            acornSunk = false;
+        }
     }
 
     void EndLaunch() {
         animator.SetBool("Launching", false);
-    }
 
-    public void GetTagged() {
-        Debug.Log("tagged!");
-        IsTagged = true;
-        Inventory.springleaves.Add(this);
-        onSpringleafTag?.Invoke();
+        if (acornSunk) {
+            acornAnim.SetActive(true);
+        } else {
+            acornAnim.SetActive(false);
+            acornObj.transform.position = acornAnim.transform.position;
+            acornObj.sprite.transform.rotation = acornAnim.transform.GetChild(0).rotation;
+            acornObj.gameObject.SetActive(true);
+        }
     }
 
     public void Grab() {
@@ -89,5 +103,24 @@ public class Springleaf : MonoBehaviour, IInteractable, ITaggable, IGrabbable {
         flower.SetActive(false);
         animator.SetInteger("Direction", direction);
         strawbert.EndGrasso();
+    }
+
+    public void Sink() {
+        Collider2D col = acornAnim.GetComponent<Collider2D>();
+        Debug.Log(col.enabled);
+        List<Collider2D> overlappingColliders = new List<Collider2D>();
+        col.OverlapCollider(new ContactFilter2D().NoFilter(), overlappingColliders);
+
+        foreach (Collider2D collider in overlappingColliders) {
+            if (collider.CompareTag("River")) {
+                acornAnim.SetActive(false);
+                acornSunk = true;
+            }
+            if (collider.TryGetComponent<OakLeaves>(out OakLeaves oakLeaves)) {
+                acornAnim.SetActive(false);
+                acornSunk = true;
+                oakLeaves.gameObject.SetActive(false);
+            }
+        }
     }
 }

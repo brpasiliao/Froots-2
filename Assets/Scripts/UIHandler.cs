@@ -5,23 +5,23 @@ using TMPro;
 
 public class UIHandler : MonoBehaviour {
     [SerializeField] TMP_Text acornsText;
-    [SerializeField] TMP_Text springleavesText;
+    // [SerializeField] TMP_Text springleavesText;
 
     private void OnEnable() {
         Acorn.onAcornTag += UpdateAcornCount;
-        Springleaf.onSpringleafTag += UpdateSpringleafCount;
+        // Springleaf.onSpringleafTag += UpdateSpringleafCount;
     }
 
     private void OnDisable() {
         Acorn.onAcornTag -= UpdateAcornCount;
-        Springleaf.onSpringleafTag -= UpdateSpringleafCount;
+        // Springleaf.onSpringleafTag -= UpdateSpringleafCount;
     }
 
     void UpdateAcornCount() {
         acornsText.text = "Acorns: " + Inventory.acorns.Count;
     }
 
-    void UpdateSpringleafCount() {
-        springleavesText.text = "Springleaves: " + Inventory.springleaves.Count;
-    }
+    // void UpdateSpringleafCount() {
+    //     springleavesText.text = "Springleaves: " + Inventory.springleaves.Count;
+    // }
 }
