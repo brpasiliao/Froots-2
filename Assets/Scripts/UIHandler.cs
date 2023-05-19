@@ -9,6 +9,8 @@ public class UIHandler : MonoBehaviour {
     [SerializeField] TMP_Text applewoodText;
     [SerializeField] RectTransform feedbackTextbox;
     [SerializeField] TMP_Text feedbackText;
+    [SerializeField] RectTransform dialogueTextbox;
+    [SerializeField] TMP_Text dialogueText;
 
     public float popupTime;
 
@@ -16,12 +18,14 @@ public class UIHandler : MonoBehaviour {
         EventBroker.onAcornCount += UpdateAcornCount;
         EventBroker.onApplewoodCount += UpdateApplewoodCount;
         EventBroker.onFeedbackSend += SendFeedback;
+        EventBroker.onDialoguePlay += StartPlayDialogue;
     }
 
     private void OnDisable() {
         EventBroker.onAcornCount -= UpdateAcornCount;
         EventBroker.onApplewoodCount -= UpdateApplewoodCount;
         EventBroker.onFeedbackSend -= SendFeedback;
+        EventBroker.onDialoguePlay -= StartPlayDialogue;
     }
 
     void UpdateAcornCount() {
@@ -46,4 +50,24 @@ public class UIHandler : MonoBehaviour {
         feedbackTextbox.gameObject.SetActive(false);
     }
 
+    void StartPlayDialogue(List<string> dialogue) {
+        StartCoroutine("PlayDialogue", dialogue);
+    }
+
+    IEnumerator PlayDialogue(List<string> dialogue) {
+        dialogueTextbox.gameObject.SetActive(true);
+
+        foreach (string line in dialogue) {
+            dialogueText.text = line;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueTextbox);
+            Debug.Log("line");
+
+            yield return 0;
+            while (!Input.GetButtonDown("Fire1")) 
+                yield return null;
+        }
+
+        dialogueTextbox.gameObject.SetActive(false);
+        EventBroker.CallEndDialogue();
+    }
 }

@@ -9,12 +9,42 @@ public class StrawbertBehavior : MonoBehaviour {
     [SerializeField] GameObject flower;
     List<Collider2D> overlappingColliders = new List<Collider2D>();
 
+    List<string> acornDialogue = new List<string> {
+        "I saw some springleaves around here... ",
+        "Maybe I can launch these acorns with them.",
+        "Press right click on mouse to tag an acorn to use for later",
+    };
+    List<string> springleafDialogue = new List<string> {
+        "There's a springleaf!",
+        "Press right click on mouse to load an acorn, and again to launch it.",
+        "To change its direction, press left click on mouse to use the grasso and QE to aim.",
+        "Then, press QE again to rotate the springleaf.",
+    };
+    List<string> applewoodDialogue = new List<string> {
+        "This is great wood for building houses!",
+        "I knew helping the Apples and Pears was a good idea!",
+    };
+
+    bool firstAcorn = true;
+    bool firstSpringleaf = true;
+    bool firstApplewood = true;
+
     bool canMove = true;
     bool canGrasso = true;
 
     Vector2 destination;
     public float movementSpeed;
     public float rotationSpeed;
+
+    private void OnEnable() {
+        EventBroker.onDialoguePlay += Stall;
+        EventBroker.onDialogueEnd += Unstall;
+    }
+
+    private void OnDisable() {
+        EventBroker.onDialoguePlay -= Stall;
+        EventBroker.onDialogueEnd -= Unstall;
+    }
 
     void Update() {
         if (canMove) Move();
@@ -77,5 +107,33 @@ public class StrawbertBehavior : MonoBehaviour {
                 interactedObj.PerformInteraction();
             }
         }
+    }
+
+    public void Stall(List<string> dialogue) {
+        canMove = false;
+        canGrasso = false;
+        animator.enabled = false;
+        rb.velocity = Vector2.zero;
+    }
+
+    public void Unstall() {
+        canMove = true;
+        canGrasso = true;
+        animator.enabled = true;
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if (firstAcorn && other.GetComponent<Acorn>() != null) {
+            EventBroker.CallPlayDialogue(acornDialogue);
+            firstAcorn = false;
+        }
+        if (firstSpringleaf && other.GetComponent<Springleaf>() != null) {
+            EventBroker.CallPlayDialogue(springleafDialogue);
+            firstSpringleaf = false;
+        }
+        if (firstApplewood && other.GetComponent<Applewood>() != null) {
+            EventBroker.CallPlayDialogue(applewoodDialogue);
+            firstApplewood = false;
+        } 
     }
 }
