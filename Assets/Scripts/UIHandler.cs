@@ -60,7 +60,6 @@ public class UIHandler : MonoBehaviour {
         foreach (string line in dialogue) {
             dialogueText.text = line;
             LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueTextbox);
-            Debug.Log("line");
 
             yield return 0;
             while (!Input.GetButtonDown("Fire1")) 

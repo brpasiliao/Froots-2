@@ -46,9 +46,11 @@ public class StrawbertBehavior : MonoBehaviour {
         EventBroker.onDialogueEnd -= Unstall;
     }
 
-    void Update() {
+    void FixedUpdate() {
         if (canMove) Move();
+    }
 
+    void Update() {
         if (canGrasso) {
             if (Input.GetButtonDown("Fire1")) 
                 StartCoroutine("UseGrasso");
@@ -70,9 +72,9 @@ public class StrawbertBehavior : MonoBehaviour {
         
         yield return 0;
         while (!Input.GetButtonDown("Fire1")) {
-            if (Input.GetKey(KeyCode.O)) {
+            if (Input.GetKey(KeyCode.Q)) {
                 pointer.transform.Rotate(new Vector3(0, 0, rotationSpeed));
-            } else if (Input.GetKey(KeyCode.P)) {
+            } else if (Input.GetKey(KeyCode.E)) {
                 pointer.transform.Rotate(new Vector3(0, 0, -rotationSpeed));
             }
 

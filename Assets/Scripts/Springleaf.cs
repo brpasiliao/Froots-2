@@ -83,11 +83,11 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
         flower.SetActive(true);
 
         while (!Input.GetButtonDown("Fire1")) {
-            if (Input.GetKeyDown(KeyCode.O)) {
+            if (Input.GetKeyDown(KeyCode.Q)) {
                 target.transform.Rotate(new Vector3(0, 0, 90));
                 direction--;
                 if (direction < 1) direction = 4;
-            } else if (Input.GetKeyDown(KeyCode.P)) {
+            } else if (Input.GetKeyDown(KeyCode.E)) {
                 target.transform.Rotate(new Vector3(0, 0, -90));
                 direction++;
                 if (direction > 4) direction = 1;
