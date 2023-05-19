@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UIHandler : MonoBehaviour {
     [SerializeField] TMP_Text acornsText;
+    [SerializeField] TMP_Text applewoodText;
     [SerializeField] RectTransform feedbackTextbox;
     [SerializeField] TMP_Text feedbackText;
 
@@ -13,16 +14,22 @@ public class UIHandler : MonoBehaviour {
 
     private void OnEnable() {
         EventBroker.onAcornCount += UpdateAcornCount;
+        EventBroker.onApplewoodCount += UpdateApplewoodCount;
         EventBroker.onFeedbackSend += SendFeedback;
     }
 
     private void OnDisable() {
         EventBroker.onAcornCount -= UpdateAcornCount;
+        EventBroker.onApplewoodCount -= UpdateApplewoodCount;
         EventBroker.onFeedbackSend -= SendFeedback;
     }
 
     void UpdateAcornCount() {
         acornsText.text = Inventory.acorns.Count.ToString();
+    }
+
+    void UpdateApplewoodCount() {
+        applewoodText.text = Inventory.applewoods.ToString();
     }
 
     void SendFeedback(string text) {

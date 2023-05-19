@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Post : MonoBehaviour, IGrabbable {
+public class OldPost : MonoBehaviour, IGrabbable {
     public static StrawbertBehavior strawbert;
 
     void Awake() {
@@ -10,8 +10,7 @@ public class Post : MonoBehaviour, IGrabbable {
     } 
 
     public void Grab() {
-        // flower.SetActive(true);
-        strawbert.transform.position = transform.position;
+        gameObject.SetActive(false);
         strawbert.EndGrasso();
     }
 }

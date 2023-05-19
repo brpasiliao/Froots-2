@@ -81,7 +81,6 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
 
     IEnumerator ChangeDirection() {
         flower.SetActive(true);
-        target.SetActive(true);
 
         while (!Input.GetButtonDown("Fire1")) {
             if (Input.GetKeyDown(KeyCode.O)) {
@@ -95,14 +94,12 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
             }
 
             if (Input.GetButtonDown("Fire3")) {
-                target.SetActive(false);
                 StopCoroutine("ChangeDirection");
             }
 
             yield return null;
         }
 
-        target.SetActive(false);
         flower.SetActive(false);
         animator.SetInteger("Direction", direction);
         strawbert.EndGrasso();
