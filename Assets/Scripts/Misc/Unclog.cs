@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unclog : MonoBehaviour, IInteractable {
+public class Unclog : MonoBehaviour {
     [SerializeField] Transform riverLeaves;
     [SerializeField] SpriteRenderer background;
     [SerializeField] Sprite newBackground;
@@ -13,7 +13,6 @@ public class Unclog : MonoBehaviour, IInteractable {
     };
 
     public float removalTime;
-    bool isUnclogging = false;
     int index;
 
     private void OnEnable() {
@@ -24,15 +23,11 @@ public class Unclog : MonoBehaviour, IInteractable {
         EventBroker.onRiverClog -= AddLeaves;
     }
 
-    public void PerformInteraction() {
-        if (!isUnclogging) StartCoroutine("UnclogRiver");
-        else EventBroker.CallSendFeedback("Already unclogging the river!");
+    public void Start() {
+        StartCoroutine("UnclogRiver");
     }
 
     IEnumerator UnclogRiver() {
-        EventBroker.CallSendFeedback("Started unclogging the river!");
-        isUnclogging = true;
-
         index = riverLeaves.childCount - 1;
         while (index >= 0) {
             yield return new WaitForSeconds(removalTime);
@@ -40,13 +35,12 @@ public class Unclog : MonoBehaviour, IInteractable {
             index--;
         }
 
-        isUnclogging = false;
         background.sprite = newBackground;
         EventBroker.CallPlayDialogue(unclogDialogue);
     }
 
     void AddLeaves() {
-        if (isUnclogging && index < riverLeaves.childCount - 1) {
+        if (index < riverLeaves.childCount - 1) {
             index++;
             riverLeaves.GetChild(index).gameObject.SetActive(true);
         }

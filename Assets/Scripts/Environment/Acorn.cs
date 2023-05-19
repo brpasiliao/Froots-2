@@ -8,13 +8,15 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
 
     public bool IsTagged { get; set; }
 
+    public Springleaf springleaf;
+
     void Awake() {
         IsTagged = false;
     }
 
     public void PerformInteraction() {
         if (!IsTagged) GetTagged();
-        else EventBroker.CallSendFeedback("Already tagged!");
+        else Reload();
     }
 
     public void GetTagged() {
@@ -22,5 +24,10 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
         IsTagged = true;
         Inventory.acorns.Add(this);
         EventBroker.CallAcornCount();
+    }
+
+    public void Reload() {
+        EventBroker.CallSendFeedback("Reloaded on springleaf!");
+        springleaf.Load();
     }
 }

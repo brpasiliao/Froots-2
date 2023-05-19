@@ -37,11 +37,12 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
             if (Inventory.acorns.Count > 0) {
                 EventBroker.CallSendFeedback("Assigned acorn to springleaf!");
                 hasAcorn = true;
-                acornAnim.SetActive(true);
-                
+
                 acornObj = Inventory.acorns[0];
-                acornObj.gameObject.SetActive(false);
                 acornObj.transform.SetParent(transform);
+                acornObj.springleaf = this;
+                acornObj.gameObject.SetActive(false);
+                acornAnim.SetActive(true);
 
                 Inventory.acorns.RemoveAt(0);
                 EventBroker.CallAcornCount();
@@ -120,6 +121,14 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
                 acornSunk = true;
                 oakLeaves.Disperse();
             }
+            if (collider.TryGetComponent<LandLeaves>(out LandLeaves landLeaves)) {
+                landLeaves.Break();
+            }
         }
+    }
+
+    public void Load() {
+        acornObj.gameObject.SetActive(false);
+        acornAnim.SetActive(true);
     }
 }
