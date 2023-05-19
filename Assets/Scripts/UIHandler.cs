@@ -2,26 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIHandler : MonoBehaviour {
     [SerializeField] TMP_Text acornsText;
-    // [SerializeField] TMP_Text springleavesText;
+    [SerializeField] RectTransform feedbackTextbox;
+    [SerializeField] TMP_Text feedbackText;
+
+    public float popupTime;
 
     private void OnEnable() {
-        Acorn.onAcornTag += UpdateAcornCount;
-        // Springleaf.onSpringleafTag += UpdateSpringleafCount;
+        EventBroker.onAcornCount += UpdateAcornCount;
+        EventBroker.onFeedbackSend += SendFeedback;
     }
 
     private void OnDisable() {
-        Acorn.onAcornTag -= UpdateAcornCount;
-        // Springleaf.onSpringleafTag -= UpdateSpringleafCount;
+        EventBroker.onAcornCount -= UpdateAcornCount;
+        EventBroker.onFeedbackSend -= SendFeedback;
     }
 
     void UpdateAcornCount() {
-        acornsText.text = "Acorns: " + Inventory.acorns.Count;
+        acornsText.text = Inventory.acorns.Count.ToString();
     }
 
-    // void UpdateSpringleafCount() {
-    //     springleavesText.text = "Springleaves: " + Inventory.springleaves.Count;
-    // }
+    void SendFeedback(string text) {
+        StopCoroutine("ShowFeedback");
+        feedbackTextbox.gameObject.SetActive(false);
+        StartCoroutine("ShowFeedback", text);
+    }
+
+    IEnumerator ShowFeedback(string text) {
+        feedbackTextbox.gameObject.SetActive(true);
+        feedbackText.text = text;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(feedbackTextbox);
+        yield return new WaitForSeconds(popupTime);
+        feedbackTextbox.gameObject.SetActive(false);
+    }
+
 }

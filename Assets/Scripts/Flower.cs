@@ -8,8 +8,6 @@ public class Flower : MonoBehaviour {
    
     void OnTriggerEnter2D(Collider2D other) {
         if (other.isTrigger && other.TryGetComponent<IGrabbable>(out IGrabbable grabbedObj)) {
-            Debug.Log("grab");
-
             col.enabled = false;
             animator.SetBool("Wrapping", true);
             grabbedObj.Grab();

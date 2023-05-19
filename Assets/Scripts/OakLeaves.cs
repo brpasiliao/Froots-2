@@ -7,8 +7,6 @@ public class OakLeaves : MonoBehaviour {
     [SerializeField] Collider2D col;
     [SerializeField] SpriteRenderer sr;
 
-    public static event Action onClog;
-
     bool isDispersed = false;
 
     public void Spawn() {
@@ -20,7 +18,7 @@ public class OakLeaves : MonoBehaviour {
     public void Clog() {
         if (!isDispersed) {
             col.enabled = false;
-            onClog?.Invoke();
+            EventBroker.CallRiverClog();
         }
     }
 

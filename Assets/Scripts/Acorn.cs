@@ -8,22 +8,19 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
 
     public bool IsTagged { get; set; }
 
-    public static event Action onAcornTag;
-
     void Awake() {
         IsTagged = false;
     }
 
     public void PerformInteraction() {
         if (!IsTagged) GetTagged();
-        else Debug.Log("acorn already tagged!");
-        // roll?
+        else EventBroker.CallSendFeedback("Already tagged!");
     }
 
     public void GetTagged() {
-        Debug.Log("acorn tagged!");
+        EventBroker.CallSendFeedback("Tagged!");
         IsTagged = true;
         Inventory.acorns.Add(this);
-        onAcornTag?.Invoke();
+        EventBroker.CallAcornCount();
     }
 }

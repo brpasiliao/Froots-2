@@ -10,20 +10,20 @@ public class Unclog : MonoBehaviour, IInteractable {
     int index;
 
     private void OnEnable() {
-        OakLeaves.onClog += AddLeaves;
+        EventBroker.onRiverClog += AddLeaves;
     }
 
     private void OnDisable() {
-        OakLeaves.onClog -= AddLeaves;
+        EventBroker.onRiverClog -= AddLeaves;
     }
 
     public void PerformInteraction() {
         if (!isUnclogging) StartCoroutine("UnclogRiver");
-        else Debug.Log("already unclogging!");
+        else EventBroker.CallSendFeedback("Already unclogging the river!");
     }
 
     IEnumerator UnclogRiver() {
-        Debug.Log("unclogging!");
+        EventBroker.CallSendFeedback("Started unclogging the river!");
         isUnclogging = true;
 
         index = riverLeaves.childCount - 1;
@@ -34,12 +34,11 @@ public class Unclog : MonoBehaviour, IInteractable {
         }
 
         isUnclogging = false;
-        Debug.Log("unclogged!");
+        EventBroker.CallSendFeedback("Unclogged the river!");
     }
 
     void AddLeaves() {
         if (isUnclogging && index < riverLeaves.childCount - 1) {
-            Debug.Log("clog");
             index++;
             riverLeaves.GetChild(index).gameObject.SetActive(true);
         }

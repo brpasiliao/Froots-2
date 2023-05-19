@@ -35,15 +35,18 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     public void PerformInteraction() {
         if (!hasAcorn) {
             if (Inventory.acorns.Count > 0) {
+                EventBroker.CallSendFeedback("Assigned acorn to springleaf!");
                 hasAcorn = true;
                 acornAnim.SetActive(true);
                 
                 acornObj = Inventory.acorns[0];
                 acornObj.gameObject.SetActive(false);
                 acornObj.transform.SetParent(transform);
+
                 Inventory.acorns.RemoveAt(0);
+                EventBroker.CallAcornCount();
             } else {
-                Debug.Log("not enough acorns!");
+                EventBroker.CallSendFeedback("Not enough acorns!");
             }
         } else {
             Launch();
@@ -107,7 +110,6 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
 
     public void Sink() {
         Collider2D col = acornAnim.GetComponent<Collider2D>();
-        Debug.Log(col.enabled);
         List<Collider2D> overlappingColliders = new List<Collider2D>();
         col.OverlapCollider(new ContactFilter2D().NoFilter(), overlappingColliders);
 
