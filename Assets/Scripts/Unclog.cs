@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Unclog : MonoBehaviour, IInteractable {
     [SerializeField] Transform riverLeaves;
+    [SerializeField] SpriteRenderer background;
+    [SerializeField] Sprite newBackground;
+
+    List<string> unclogDialogue = new List<string> {
+        "Awesome! Now that that's done...",
+        "I can go collect some applewood for the village.",
+    };
 
     public float removalTime;
     bool isUnclogging = false;
@@ -34,7 +41,8 @@ public class Unclog : MonoBehaviour, IInteractable {
         }
 
         isUnclogging = false;
-        EventBroker.CallSendFeedback("Unclogged the river!");
+        background.sprite = newBackground;
+        EventBroker.CallPlayDialogue(unclogDialogue);
     }
 
     void AddLeaves() {

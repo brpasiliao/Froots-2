@@ -8,6 +8,8 @@ public class EventBroker : MonoBehaviour {
     public static event Action onApplewoodCount;
     public static event Action onRiverClog;
     public static event Action<string> onFeedbackSend;
+    public static event Action<List<string>> onDialoguePlay;
+    public static event Action onDialogueEnd;
 
     public static void CallAcornCount() {
         onAcornCount?.Invoke();
@@ -23,6 +25,14 @@ public class EventBroker : MonoBehaviour {
 
     public static void CallSendFeedback(string text) {
         onFeedbackSend?.Invoke(text);
+    }
+
+    public static void CallPlayDialogue(List<string> dialogue) {
+        onDialoguePlay?.Invoke(dialogue);
+    }
+
+    public static void CallEndDialogue() {
+        onDialogueEnd?.Invoke();
     }
 
 }
