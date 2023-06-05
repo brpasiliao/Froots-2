@@ -12,6 +12,7 @@ public class Unclog : MonoBehaviour {
         "I can go collect some applewood for the village.",
     };
 
+    public static bool riverUnclogged = false;
     public float removalTime;
     int index;
 
@@ -35,6 +36,7 @@ public class Unclog : MonoBehaviour {
             index--;
         }
 
+        riverUnclogged = true;
         background.sprite = newBackground;
         EventBroker.CallPlayDialogue(unclogDialogue);
     }

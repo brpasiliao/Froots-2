@@ -992,7 +992,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 2.0166667
+  - time: 2
     functionName: EndLaunch
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: cd4dba7a768764a70932e1441718bb4d, type: 3}

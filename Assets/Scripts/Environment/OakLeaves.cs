@@ -16,7 +16,7 @@ public class OakLeaves : MonoBehaviour {
     }
 
     public void Clog() {
-        if (!isDispersed) {
+        if (!Unclog.riverUnclogged && !isDispersed) {
             col.enabled = false;
             EventBroker.CallRiverClog();
         }

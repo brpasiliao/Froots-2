@@ -33,7 +33,7 @@ public class UIHandler : MonoBehaviour {
     }
 
     void UpdateApplewoodCount() {
-        applewoodText.text = Inventory.applewoods.ToString();
+        applewoodText.text = Inventory.applewoods.ToString() + "/20";
     }
 
     void SendFeedback(string text) {

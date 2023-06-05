@@ -9,7 +9,10 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     [SerializeField] GameObject flower;
     [SerializeField] GameObject acornAnim;
     [SerializeField] int direction;     // 1=up, 2=right, 3=down, 4=left
+    [SerializeField] SpriteRenderer srTemp;
     public static StrawbertBehavior strawbert;
+
+    public SpriteRenderer sr { get; set; }
 
     bool hasAcorn = false;
     bool acornSunk = false;
@@ -17,7 +20,8 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
 
     void Awake() {
         strawbert = GameObject.FindWithTag("Player").GetComponent<StrawbertBehavior>();
-    } 
+        sr = srTemp;
+    }
 
     void Start() {
         animator.SetInteger("Direction", direction);

@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 4580185947018291522}
   - component: {fileID: 3935512413578897661}
   - component: {fileID: 3935512413578897662}
+  - component: {fileID: 3314392512381443367}
   m_Layer: 0
   m_Name: Applewood
   m_TagString: Untagged
@@ -131,6 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3d1fa89ae7a9483c9cd4d1565de8ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 3314392512381443367}
 --- !u!114 &3935512413578897661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,3 +161,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.15}
   serializedVersion: 2
   m_Radius: 0.3
+--- !u!95 &3314392512381443367
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3935512413578897656}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c5f34ebe450cc43bb98b60a0642e7128, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

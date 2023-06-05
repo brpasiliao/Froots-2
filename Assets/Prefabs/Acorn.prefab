@@ -49,7 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb879d51280143959a8bba7d7455c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  srTemp: {fileID: 7449466715584818842}
   sprite: {fileID: 7449466715584818844}
+  springleaf: {fileID: 0}
 --- !u!114 &7449466714630167040
 MonoBehaviour:
   m_ObjectHideFlags: 0

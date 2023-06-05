@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StrawbertBehavior : MonoBehaviour {
+    [SerializeField] Camera cam;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Animator animator;
     [SerializeField] GameObject pointer;
@@ -12,13 +13,13 @@ public class StrawbertBehavior : MonoBehaviour {
     List<string> acornDialogue = new List<string> {
         "I saw some springleaves around here... ",
         "Maybe I can launch these acorns with them.",
-        "Press right click on mouse to tag an acorn to use for later",
+        "Press right click to tag an acorn to use for later",
     };
     List<string> springleafDialogue = new List<string> {
         "There's a springleaf!",
-        "Press right click on mouse to load an acorn, and again to launch it.",
-        "To change its direction, press left click on mouse to use the grasso and QE to aim.",
-        "Then, press QE again to rotate the springleaf.",
+        "Press right click to load an acorn, and again to launch it.",
+        "To change its direction, grab it with the grasso.",
+        "Then, press QE to rotate the springleaf, and left click to finish.",
     };
     List<string> applewoodDialogue = new List<string> {
         "This is great wood for building houses!",
@@ -72,14 +73,12 @@ public class StrawbertBehavior : MonoBehaviour {
         
         yield return 0;
         while (!Input.GetButtonDown("Fire1")) {
-            if (Input.GetKey(KeyCode.Q)) {
-                pointer.transform.Rotate(new Vector3(0, 0, rotationSpeed));
-            } else if (Input.GetKey(KeyCode.E)) {
-                pointer.transform.Rotate(new Vector3(0, 0, -rotationSpeed));
-            }
-
-            // float angle = Vector3.Angle(pointer.transform.position, Input.mousePosition);
-            // pointer.transform.eulerAngles = new Vector3(0, 0, angle);
+            Vector3 mousePos = Input.mousePosition;
+            Vector3 pointerPos = Camera.main.WorldToScreenPoint(pointer.transform.position);
+            mousePos.x = mousePos.x - pointerPos.x;
+            mousePos.y = mousePos.y - pointerPos.y;
+            float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+            pointer.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle-90));
 
             if (Input.GetButtonDown("Fire3")) {
                 EndGrasso();
@@ -89,6 +88,7 @@ public class StrawbertBehavior : MonoBehaviour {
         }
 
         canMove = false;
+        rb.velocity = Vector2.zero;
         animator.SetBool("Shooting", true);
     }
 
@@ -112,6 +112,7 @@ public class StrawbertBehavior : MonoBehaviour {
     }
 
     public void Stall(List<string> dialogue) {
+        EndGrasso();
         canMove = false;
         canGrasso = false;
         animator.enabled = false;
@@ -125,6 +126,10 @@ public class StrawbertBehavior : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
+        if (other.isTrigger && other.TryGetComponent<IInteractable>(out IInteractable interactedObj)) {
+            interactedObj.sr.color = new Color(1, 1, 1, 0.7f);
+        }
+
         if (firstAcorn && other.GetComponent<Acorn>() != null) {
             EventBroker.CallPlayDialogue(acornDialogue);
             firstAcorn = false;
@@ -137,5 +142,11 @@ public class StrawbertBehavior : MonoBehaviour {
             EventBroker.CallPlayDialogue(applewoodDialogue);
             firstApplewood = false;
         } 
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        if (other.isTrigger && other.TryGetComponent<IInteractable>(out IInteractable interactedObj)) {
+            interactedObj.sr.color = new Color(1, 1, 1, 1);
+        }
     }
 }
