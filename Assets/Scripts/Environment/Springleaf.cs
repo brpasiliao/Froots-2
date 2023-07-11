@@ -107,7 +107,7 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
 
         flower.SetActive(false);
         animator.SetInteger("Direction", direction);
-        strawbert.EndGrasso();
+        strawbert.grasso.EndGrasso();
     }
 
     public void Sink() {

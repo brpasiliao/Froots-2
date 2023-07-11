@@ -12,6 +12,6 @@ public class Post : MonoBehaviour, IGrabbable {
     public void Grab() {
         // flower.SetActive(true);
         strawbert.transform.position = transform.position;
-        strawbert.EndGrasso();
+        strawbert.grasso.EndGrasso();
     }
 }

@@ -11,6 +11,6 @@ public class OldPost : MonoBehaviour, IGrabbable {
 
     public void Grab() {
         gameObject.SetActive(false);
-        strawbert.EndGrasso();
+        strawbert.grasso.EndGrasso();
     }
 }
