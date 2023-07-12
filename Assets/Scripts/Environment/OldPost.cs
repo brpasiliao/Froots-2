@@ -9,7 +9,7 @@ public class OldPost : MonoBehaviour, IGrabbable {
         strawbert = GameObject.FindWithTag("Player").GetComponent<StrawbertBehavior>();
     } 
 
-    public void Grab() {
+    public void GetGrabbed() {
         gameObject.SetActive(false);
         strawbert.grasso.EndGrasso();
     }

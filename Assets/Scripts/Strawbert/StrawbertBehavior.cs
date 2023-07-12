@@ -42,8 +42,8 @@ public class StrawbertBehavior : MonoBehaviour {
         rb.OverlapCollider(noFilter, overlappingColliders);
         
         foreach (Collider2D collider in overlappingColliders) {
-            if (collider.isTrigger && collider.TryGetComponent<IInteractable>(out IInteractable interactedObj)) {
-                interactedObj.PerformInteraction();
+            if (collider.isTrigger && collider.TryGetComponent<IInteractable>(out IInteractable interacted)) {
+                interacted.GetInteracted();
             }
         }
     }

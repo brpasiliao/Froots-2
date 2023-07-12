@@ -9,7 +9,7 @@ public class Post : MonoBehaviour, IGrabbable {
         strawbert = GameObject.FindWithTag("Player").GetComponent<StrawbertBehavior>();
     } 
 
-    public void Grab() {
+    public void GetGrabbed() {
         // flower.SetActive(true);
         strawbert.transform.position = transform.position;
         strawbert.grasso.EndGrasso();

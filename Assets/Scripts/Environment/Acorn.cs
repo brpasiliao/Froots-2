@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 public class Acorn : MonoBehaviour, IInteractable, ITaggable {
-    public bool IsTagged { get; set; }
+    public bool isTagged { get; set; } = false;
     public SpriteRenderer sr { get; set; }
     [SerializeField] SpriteRenderer srTemp;
     
@@ -12,18 +12,17 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
     public Springleaf springleaf;
 
     void Awake() {
-        IsTagged = false;
         sr = srTemp;
     }
 
-    public void PerformInteraction() {
-        if (!IsTagged) GetTagged();
+    public void GetInteracted() {
+        if (!isTagged) GetTagged();
         else Reload();
     }
 
     public void GetTagged() {
         EventBroker.CallSendFeedback("Tagged!");
-        IsTagged = true;
+        isTagged = true;
         Inventory.acorns.Add(this);
         EventBroker.CallAcornCount();
     }
@@ -31,9 +30,15 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
     public void Reload() {
         if (springleaf != null) {
             EventBroker.CallSendFeedback("Reloaded on springleaf!");
-            springleaf.Load();
+            springleaf.Reload();
         } else {
             EventBroker.CallSendFeedback("Already tagged!");
         }
+    }
+
+    void AssignToSpringleaf(Springleaf springleaf) {
+        transform.SetParent(springleaf.transform);
+        springleaf = this;
+        gameObject.SetActive(false);
     }
 }

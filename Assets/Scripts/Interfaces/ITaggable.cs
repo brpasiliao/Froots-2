@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface ITaggable {
-    bool IsTagged { get; set; }
+    bool isTagged { get; set; }
 
     void GetTagged();
 }

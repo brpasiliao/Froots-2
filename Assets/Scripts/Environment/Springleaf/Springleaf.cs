@@ -3,84 +3,85 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public enum Direction {
+    up, right, down, left
+}
+
 public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
-    [SerializeField] Animator animator;
+    public SpringleafAnimator animator;
     [SerializeField] GameObject target;
     [SerializeField] GameObject flower;
     [SerializeField] GameObject acornAnim;
-    [SerializeField] int direction;     // 1=up, 2=right, 3=down, 4=left
+    [SerializeField] Direction direction;
     [SerializeField] SpriteRenderer srTemp;
     public static StrawbertBehavior strawbert;
 
     public SpriteRenderer sr { get; set; }
 
     bool hasAcorn = false;
+    bool canLaunch = true;
     bool acornSunk = false;
-    Acorn acornObj;
+    Acorn acorn;
+
+    string assignedAcorn = "Assigned acorn to springleaf!";
+    string noAcorns = "Not enough acorns!";
 
     void Awake() {
-        strawbert = GameObject.FindWithTag("Player").GetComponent<StrawbertBehavior>();
+        GameObject player = GameObject.FindWithTag("Player");
+        strawbert = player.GetComponent<StrawbertBehavior>();
         sr = srTemp;
     }
 
     void Start() {
-        animator.SetInteger("Direction", direction);
-
-        if (direction == 1) 
-            target.transform.eulerAngles = new Vector3(0, 0, 180);
-        else if (direction == 2)
-            target.transform.eulerAngles = new Vector3(0, 0, 90);
-        else if (direction == 3)
-            target.transform.eulerAngles = new Vector3(0, 0, 0);
-        else
-            target.transform.eulerAngles = new Vector3(0, 0, -90);
+        ChangeDirection(direction);
     }
 
-    public void PerformInteraction() {
+    public void GetInteracted() {
         if (!hasAcorn) {
-            if (Inventory.acorns.Count > 0) {
-                EventBroker.CallSendFeedback("Assigned acorn to springleaf!");
-                hasAcorn = true;
-
-                acornObj = Inventory.acorns[0];
-                acornObj.transform.SetParent(transform);
-                acornObj.springleaf = this;
-                acornObj.gameObject.SetActive(false);
-                acornAnim.SetActive(true);
-
-                Inventory.acorns.RemoveAt(0);
-                EventBroker.CallAcornCount();
-            } else {
-                EventBroker.CallSendFeedback("Not enough acorns!");
-            }
+            TryLoadAcorn();
         } else {
-            Launch();
+            LaunchAcorn();
         }
     }
 
-    void Launch() {
-        if (!animator.GetBool("Launching")) {
-            animator.SetBool("Launching", true);
+    void TryLoadAcorn() {
+        if (Inventory.HasAcorns()) {
+            LoadAcorn();
+
+            EventBroker.CallSendFeedback(assignedAcorn);
+            EventBroker.CallAcornCount();
+
+        } else {
+            EventBroker.CallSendFeedback(noAcorns);
+        }
+    }
+
+    void LaunchAcorn() {
+        if (canLaunch) {
+            canLaunch = false;
+            animator.SetAnimatorBool("Launching", true);
             acornAnim.SetActive(true);
-            acornObj.gameObject.SetActive(false);
+
+            acorn.gameObject.SetActive(false);
             acornSunk = false;
         }
     }
 
     void EndLaunch() {
-        animator.SetBool("Launching", false);
+        canLaunch = true;
+        animator.SetAnimatorBool("Launching", false);
 
         if (acornSunk) {
             acornAnim.SetActive(true);
         } else {
             acornAnim.SetActive(false);
-            acornObj.transform.position = acornAnim.transform.position;
-            acornObj.sprite.transform.rotation = acornAnim.transform.GetChild(0).rotation;
-            acornObj.gameObject.SetActive(true);
+            acorn.transform.position = acornAnim.transform.position;
+            acorn.sprite.transform.rotation = acornAnim.transform.GetChild(0).rotation;
+            acorn.gameObject.SetActive(true);
         }
     }
 
-    public void Grab() {
+    public void GetGrabbed() {
         StartCoroutine("ChangeDirection");
     }
 
@@ -131,8 +132,29 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
         }
     }
 
-    public void Load() {
-        acornObj.gameObject.SetActive(false);
+    public void Reload() {
+        acorn.gameObject.SetActive(false);
         acornAnim.SetActive(true);
+    }
+
+    void LoadAcorn() {
+        hasAcorn = true;
+        acorn = Inventory.TakeAcorn();
+        acorn.AssignToSpringleaf(this);
+        acornAnim.SetActive(true);
+    }
+
+    void ChangeDirection(Direction newDirection) {
+        if (newDirection == Direction.up) {
+            target.transform.eulerAngles = new Vector3(0, 0, 180);
+        } else if (newDirection == Direction.right) {
+            target.transform.eulerAngles = new Vector3(0, 0, 90);
+        } else if (newDirection == Direction.down) {
+            target.transform.eulerAngles = new Vector3(0, 0, 0);
+        } else {
+            target.transform.eulerAngles = new Vector3(0, 0, -90);
+        }
+
+        animator.SetInteger("Direction", (int)newDirection);
     }
 }
