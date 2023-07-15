@@ -7,7 +7,7 @@ public enum Direction {
     up, right, down, left
 }
 
-public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
+public class Springleaf : MonoBehaviour, IInteractable, IApproachable, IGrabbable {
     public SpringleafAnimator animator;
     [SerializeField] GameObject target;
     [SerializeField] GameObject flower;
@@ -42,6 +42,16 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
         } else {
             LaunchAcorn();
         }
+    }
+
+    public void GetApproached() {
+        target.SetActive(true);
+        sr.color = new Color(1, 1, 1, 0.7f);
+    }
+
+    public void GetDeparted() {
+        target.SetActive(false);
+        sr.color = new Color(1, 1, 1, 1);
     }
 
     void TryLoadAcorn() {
@@ -87,6 +97,7 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
 
     IEnumerator ChangeDirection() {
         flower.SetActive(true);
+        target.SetActive(true);
 
         while (!Input.GetButtonDown("Fire1")) {
             RotateTarget();
@@ -99,6 +110,7 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
         }
 
         flower.SetActive(false);
+        target.SetActive(true);
         animator.SetAnimatorInt("Direction", (int)direction);
         strawbert.grasso.EndGrasso();
     }

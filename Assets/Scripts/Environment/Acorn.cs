@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Acorn : MonoBehaviour, IInteractable, ITaggable {
+public class Acorn : MonoBehaviour, IInteractable, IApproachable, ITaggable {
     public bool isTagged { get; set; } = false;
     public SpriteRenderer sr { get; set; }
     [SerializeField] SpriteRenderer srTemp;
@@ -18,6 +18,14 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
     public void GetInteracted() {
         if (!isTagged) GetTagged();
         else Reload();
+    }
+
+    public void GetApproached() {
+        sr.color = new Color(1, 1, 1, 0.7f);
+    }
+
+    public void GetDeparted() {
+        sr.color = new Color(1, 1, 1, 1);
     }
 
     public void GetTagged() {

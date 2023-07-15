@@ -24,14 +24,14 @@ public class StrawbertBehavior : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.isTrigger && other.TryGetComponent<IInteractable>(out IInteractable interacted)) {
-            ChangeColorOpacity(interacted, 0.7f);
+        if (other.isTrigger && other.TryGetComponent<IApproachable>(out IApproachable approached)) {
+            approached.GetApproached();
         }
     }
 
     void OnTriggerExit2D(Collider2D other) {
-        if (other.isTrigger && other.TryGetComponent<IInteractable>(out IInteractable interacted)) {
-            ChangeColorOpacity(interacted, 1);
+        if (other.isTrigger && other.TryGetComponent<IApproachable>(out IApproachable approached)) {
+            approached.GetDeparted();
         }
     }
 
