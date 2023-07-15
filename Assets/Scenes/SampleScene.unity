@@ -2508,14 +2508,6 @@ PrefabInstance:
       value: Springleaf (4)
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
@@ -4379,19 +4371,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5767103532543300706, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: direction
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5767103532543300718, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_Name
       value: Springleaf (5)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -5152,14 +5136,6 @@ PrefabInstance:
     - target: {fileID: 5767103532543300718, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_Name
       value: Springleaf (9)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -5952,14 +5928,6 @@ PrefabInstance:
     - target: {fileID: 5767103532543300718, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_Name
       value: Springleaf (8)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -7020,14 +6988,6 @@ PrefabInstance:
     - target: {fileID: 5767103532543300718, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_Name
       value: Springleaf (10)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -12430,14 +12390,6 @@ PrefabInstance:
       value: Springleaf (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
@@ -12688,19 +12640,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5767103532543300706, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: direction
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5767103532543300718, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_Name
       value: Springleaf
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -13541,14 +13485,6 @@ PrefabInstance:
     - target: {fileID: 5767103532543300718, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_Name
       value: Springleaf (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -14435,14 +14371,6 @@ PrefabInstance:
       value: Springleaf (6)
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
@@ -14539,14 +14467,6 @@ PrefabInstance:
     - target: {fileID: 5767103532543300718, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_Name
       value: Springleaf (7)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -16315,19 +16235,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5767103532543300706, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: direction
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5767103532543300718, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_Name
       value: Springleaf
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -16734,14 +16646,6 @@ PrefabInstance:
     - target: {fileID: 5767103532543300718, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_Name
       value: Springleaf (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -22558,14 +22462,6 @@ PrefabInstance:
     - target: {fileID: 5767103532543300718, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_Name
       value: Springleaf
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5767103533032569170, guid: e2e746cafccf14d57999f68b115c2b4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

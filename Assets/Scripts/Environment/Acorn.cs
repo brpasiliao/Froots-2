@@ -23,7 +23,7 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
     public void GetTagged() {
         EventBroker.CallSendFeedback("Tagged!");
         isTagged = true;
-        Inventory.acorns.Add(this);
+        Inventory.AddAcorn(this);
         EventBroker.CallAcornCount();
     }
 
@@ -36,9 +36,9 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
         }
     }
 
-    void AssignToSpringleaf(Springleaf springleaf) {
+    public void AssignToSpringleaf(Springleaf springleaf) {
         transform.SetParent(springleaf.transform);
-        springleaf = this;
+        this.springleaf = springleaf;
         gameObject.SetActive(false);
     }
 }

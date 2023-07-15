@@ -29,11 +29,11 @@ public class UIHandler : MonoBehaviour {
     }
 
     void UpdateAcornCount() {
-        acornsText.text = Inventory.acorns.Count.ToString();
+        acornsText.text = Inventory.GetAcornCountString();
     }
 
     void UpdateApplewoodCount() {
-        applewoodText.text = Inventory.applewoods.ToString() + "/20";
+        applewoodText.text = Inventory.GetApplewoodCountString() + "/20";
     }
 
     void SendFeedback(string text) {

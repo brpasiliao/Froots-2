@@ -10,9 +10,21 @@ public static class Inventory {
         return acorns.Count > 0;
     }
 
+    public static void AddAcorn(Acorn newAcorn) {
+        acorns.Add(newAcorn);
+    }
+
     public static Acorn TakeAcorn() {
-        takenAcorn = acorns[0];
+        Acorn takenAcorn = acorns[0];
         acorns.RemoveAt(0);
         return takenAcorn;
+    }
+
+    public static string GetAcornCountString() {
+        return acorns.Count.ToString();
+    }
+
+    public static string GetApplewoodCountString() {
+        return applewoods.ToString();
     }
 }

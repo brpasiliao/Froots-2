@@ -12,7 +12,7 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     [SerializeField] GameObject target;
     [SerializeField] GameObject flower;
     [SerializeField] GameObject acornAnim;
-    [SerializeField] Direction direction;
+    [SerializeField] Direction direction = Direction.right;
     [SerializeField] SpriteRenderer srTemp;
     public static StrawbertBehavior strawbert;
 
@@ -89,15 +89,7 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
         flower.SetActive(true);
 
         while (!Input.GetButtonDown("Fire1")) {
-            if (Input.GetKeyDown(KeyCode.Q)) {
-                target.transform.Rotate(new Vector3(0, 0, 90));
-                direction--;
-                if (direction < 1) direction = 4;
-            } else if (Input.GetKeyDown(KeyCode.E)) {
-                target.transform.Rotate(new Vector3(0, 0, -90));
-                direction++;
-                if (direction > 4) direction = 1;
-            }
+            RotateTarget();
 
             if (Input.GetButtonDown("Fire3")) {
                 StopCoroutine("ChangeDirection");
@@ -107,8 +99,17 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
         }
 
         flower.SetActive(false);
-        animator.SetInteger("Direction", direction);
+        animator.SetAnimatorInt("Direction", (int)direction);
         strawbert.grasso.EndGrasso();
+    }
+
+    public void RotateTarget() {
+        Vector3 mousePos = Input.mousePosition;
+        Vector3 targetPos = Camera.main.WorldToScreenPoint(target.transform.position);
+        mousePos.x = mousePos.x - targetPos.x;
+        mousePos.y = mousePos.y - targetPos.y;
+        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+        target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle-90));
     }
 
     public void Sink() {
@@ -146,15 +147,15 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
 
     void ChangeDirection(Direction newDirection) {
         if (newDirection == Direction.up) {
-            target.transform.eulerAngles = new Vector3(0, 0, 180);
-        } else if (newDirection == Direction.right) {
             target.transform.eulerAngles = new Vector3(0, 0, 90);
-        } else if (newDirection == Direction.down) {
+        } else if (newDirection == Direction.right) {
             target.transform.eulerAngles = new Vector3(0, 0, 0);
-        } else {
+        } else if (newDirection == Direction.down) {
             target.transform.eulerAngles = new Vector3(0, 0, -90);
+        } else {
+            target.transform.eulerAngles = new Vector3(0, 0, 180);
         }
 
-        animator.SetInteger("Direction", (int)newDirection);
+        animator.SetAnimatorInt("Direction", (int)newDirection);
     }
 }

@@ -10,6 +10,6 @@ public class SpringleafAnimator : MonoBehaviour {
     }
 
     public void SetAnimatorInt(string variable, int value) {
-        animator.SetFloat(variable, value);
+        animator.SetInteger(variable, value);
     }
 }
