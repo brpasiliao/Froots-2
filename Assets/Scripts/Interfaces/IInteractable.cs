@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface IInteractable {
-    SpriteRenderer sr { get; set; }
+    void GetApproached();
+    void GetDeparted();
 
-    void GetInteracted();
+    void DoPrimary();
+    void DoSecondary();
 }

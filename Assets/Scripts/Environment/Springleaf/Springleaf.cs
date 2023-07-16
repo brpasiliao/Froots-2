@@ -7,7 +7,7 @@ public enum Direction {
     up, right, down, left
 }
 
-public class Springleaf : MonoBehaviour, IInteractable, IApproachable, IGrabbable {
+public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     public SpringleafAnimator animator;
     [SerializeField] GameObject target;
     [SerializeField] GameObject flower;
@@ -16,12 +16,11 @@ public class Springleaf : MonoBehaviour, IInteractable, IApproachable, IGrabbabl
     [SerializeField] SpriteRenderer srTemp;
     public static StrawbertBehavior strawbert;
 
-    public SpriteRenderer sr { get; set; }
-
     bool hasAcorn = false;
     bool canLaunch = true;
     bool acornSunk = false;
     Acorn acorn;
+    SpriteRenderer sr;
 
     string assignedAcorn = "Assigned acorn to springleaf!";
     string noAcorns = "Not enough acorns!";
@@ -36,13 +35,15 @@ public class Springleaf : MonoBehaviour, IInteractable, IApproachable, IGrabbabl
         ChangeDirection(direction);
     }
 
-    public void GetInteracted() {
+    public void DoPrimary() {
         if (!hasAcorn) {
             TryLoadAcorn();
         } else {
             LaunchAcorn();
         }
     }
+
+    public void DoSecondary() {}
 
     public void GetApproached() {
         target.SetActive(true);

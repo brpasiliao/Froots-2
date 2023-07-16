@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Acorn : MonoBehaviour, IInteractable, IApproachable, ITaggable {
+public class Acorn : MonoBehaviour, IInteractable, ITaggable {
     public bool isTagged { get; set; } = false;
-    public SpriteRenderer sr { get; set; }
     [SerializeField] SpriteRenderer srTemp;
+
+    SpriteRenderer sr;
     
     public GameObject sprite;
     public Springleaf springleaf;
@@ -15,10 +16,12 @@ public class Acorn : MonoBehaviour, IInteractable, IApproachable, ITaggable {
         sr = srTemp;
     }
 
-    public void GetInteracted() {
+    public void DoPrimary() {
         if (!isTagged) GetTagged();
         else Reload();
     }
+
+    public void DoSecondary() {}
 
     public void GetApproached() {
         sr.color = new Color(1, 1, 1, 0.7f);

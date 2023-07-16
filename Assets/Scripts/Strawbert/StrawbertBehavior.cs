@@ -8,8 +8,10 @@ public class StrawbertBehavior : MonoBehaviour {
     public StrawbertAnimator animator;
 
     void Update() {
-        if (grasso.canGrasso && Input.GetButtonDown("Fire2")) {
-            Interact();
+        if (Input.GetButtonDown("Fire2")) {
+            PrimaryAction();
+        } else if (Input.GetButtonDown("Jump")) {
+            SecondaryAction();
         }
     }
 
@@ -24,26 +26,31 @@ public class StrawbertBehavior : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.isTrigger && other.TryGetComponent<IApproachable>(out IApproachable approached)) {
-            approached.GetApproached();
+        if (other.isTrigger && other.TryGetComponent<IInteractable>(out IInteractable interacted)) {
+            movement.AddInteractable(interacted);
         }
     }
 
     void OnTriggerExit2D(Collider2D other) {
-        if (other.isTrigger && other.TryGetComponent<IApproachable>(out IApproachable approached)) {
-            approached.GetDeparted();
+        if (other.isTrigger && other.TryGetComponent<IInteractable>(out IInteractable interacted)) {
+            movement.RemoveInteractable(interacted);
         }
     }
 
-    void Interact() {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        ContactFilter2D noFilter = new ContactFilter2D().NoFilter();
-        List<Collider2D> overlappingColliders = new List<Collider2D>();
-        rb.OverlapCollider(noFilter, overlappingColliders);
-        
-        foreach (Collider2D collider in overlappingColliders) {
-            if (collider.isTrigger && collider.TryGetComponent<IInteractable>(out IInteractable interacted)) {
-                interacted.GetInteracted();
+    void PrimaryAction() {
+        if (grasso.canGrasso) {
+            IInteractable interacted = movement.GetClosestObject();
+            if (interacted != null) {
+                interacted.DoPrimary();
+            }
+        }
+    }
+
+    void SecondaryAction() {
+        if (grasso.canGrasso) {
+            IInteractable interacted = movement.GetClosestObject();
+            if (interacted != null) {
+                interacted.DoSecondary();
             }
         }
     }
@@ -60,9 +67,5 @@ public class StrawbertBehavior : MonoBehaviour {
         movement.canMove = true;
         grasso.canGrasso = true;
         animator.SetAnimation(true);
-    }
-
-    void ChangeColorOpacity(IInteractable interacted, float opacity) {
-        interacted.sr.color = new Color(1, 1, 1, opacity);
     }
 }
