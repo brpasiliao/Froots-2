@@ -11,7 +11,7 @@ public class StrawbertGrasso : MonoBehaviour {
     public bool canGrasso { get; set; } = true;
 
     void Update() {
-        if (canGrasso && Input.GetButtonDown("Fire1")) {
+        if (canGrasso && Input.GetButtonDown("Grasso")) {
             StartCoroutine("UseGrasso");
         }
     }
@@ -20,10 +20,10 @@ public class StrawbertGrasso : MonoBehaviour {
         SwingGrasso();
         
         yield return 0;
-        while (!Input.GetButtonDown("Fire1")) {
+        while (!Input.GetButtonDown("Grasso")) {
             AimGrasso();
 
-            if (Input.GetButtonDown("Fire3")) {
+            if (Input.GetButtonDown("Cancel")) {
                 EndGrasso();
             }
 

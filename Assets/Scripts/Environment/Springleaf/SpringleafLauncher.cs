@@ -31,9 +31,8 @@ public class SpringleafLauncher : MonoBehaviour {
         springleaf.animator.SetAnimatorBool("Launching", false);
 
         if (acornSunk) {
-            acornAnimation.SetActive(true);
+            springleaf.loader.ReloadAcorn();
         } else {
-            acornAnimation.SetActive(false);
             springleaf.acorn.ChangeToObject(acornAnimation);
         }
     }

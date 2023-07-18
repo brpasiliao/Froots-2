@@ -25,7 +25,7 @@ public class SpringleafRotation : MonoBehaviour {
         flower.SetActive(true);
 
         yield return 0;
-        while (!Input.GetButtonDown("Jump")) {
+        while (!Input.GetButtonDown("Secondary")) {
             RotateTarget();
             yield return null;
         }

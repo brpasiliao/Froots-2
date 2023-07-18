@@ -62,7 +62,7 @@ public class UIHandler : MonoBehaviour {
             LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueTextbox);
 
             yield return 0;
-            while (!Input.GetButtonDown("Fire1")) 
+            while (!Input.GetButtonDown("Primary")) 
                 yield return null;
         }
 

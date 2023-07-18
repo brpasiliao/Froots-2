@@ -8,9 +8,9 @@ public class StrawbertBehavior : MonoBehaviour {
     public StrawbertAnimator animator;
 
     void Update() {
-        if (Input.GetButtonDown("Fire2")) {
+        if (Input.GetButtonDown("Primary")) {
             PrimaryAction();
-        } else if (Input.GetButtonDown("Jump")) {
+        } else if (Input.GetButtonDown("Secondary")) {
             SecondaryAction();
         }
     }

@@ -4,10 +4,10 @@ using UnityEngine;
 using System;
 
 public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
-    public SpringleafAnimator animator;
     public SpringleafLoader loader;
     public SpringleafLauncher launcher;
     public SpringleafRotation rotation;
+    public SpringleafAnimator animator;
     public Acorn acorn;
     
     [SerializeField] SpriteRenderer srTemp;
