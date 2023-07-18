@@ -50,6 +50,5 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
     public void AssignToSpringleaf(Springleaf springleaf) {
         transform.SetParent(springleaf.transform);
         this.springleaf = springleaf;
-        gameObject.SetActive(false);
     }
 }

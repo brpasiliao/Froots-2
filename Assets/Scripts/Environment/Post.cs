@@ -10,7 +10,6 @@ public class Post : MonoBehaviour, IGrabbable {
     } 
 
     public void GetGrabbed() {
-        // flower.SetActive(true);
         strawbert.transform.position = transform.position;
         strawbert.grasso.EndGrasso();
     }

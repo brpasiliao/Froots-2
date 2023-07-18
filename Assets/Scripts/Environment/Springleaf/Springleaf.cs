@@ -16,8 +16,9 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     [SerializeField] SpriteRenderer srTemp;
     public static StrawbertBehavior strawbert;
 
-    bool hasAcorn = false;
     bool canLaunch = true;
+    bool acornAssigned = false;
+    bool acornLoaded = false;
     bool acornSunk = false;
     Acorn acorn;
     SpriteRenderer sr;
@@ -36,14 +37,18 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     }
 
     public void DoPrimary() {
-        if (!hasAcorn) {
+        if (!acornAssigned) {
             TryLoadAcorn();
-        } else {
+        } else if (!acornLoaded) {
+            Reload();
+        }else {
             LaunchAcorn();
         }
     }
 
-    public void DoSecondary() {}
+    public void DoSecondary() {
+        StartCoroutine("ChangeDirection");
+    }
 
     public void GetApproached() {
         target.SetActive(true);
@@ -55,9 +60,15 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
         sr.color = new Color(1, 1, 1, 1);
     }
 
+    public void GetGrabbed() {
+        strawbert.transform.position = transform.position;
+        strawbert.grasso.EndGrasso();
+    }
+
     void TryLoadAcorn() {
         if (Inventory.HasAcorns()) {
             LoadAcorn();
+            acornLoaded = true;
 
             EventBroker.CallSendFeedback(assignedAcorn);
             EventBroker.CallAcornCount();
@@ -69,6 +80,8 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
 
     void LaunchAcorn() {
         if (canLaunch) {
+            acornLoaded = false;
+
             canLaunch = false;
             animator.SetAnimatorBool("Launching", true);
             acornAnim.SetActive(true);
@@ -92,28 +105,21 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
         }
     }
 
-    public void GetGrabbed() {
-        StartCoroutine("ChangeDirection");
-    }
-
     IEnumerator ChangeDirection() {
+        strawbert.Stall(null);
         flower.SetActive(true);
         target.SetActive(true);
 
-        while (!Input.GetButtonDown("Fire1")) {
+        yield return 0;
+        while (!Input.GetButtonDown("Jump")) {
             RotateTarget();
-
-            if (Input.GetButtonDown("Fire3")) {
-                StopCoroutine("ChangeDirection");
-            }
-
             yield return null;
         }
 
         flower.SetActive(false);
         target.SetActive(true);
         animator.SetAnimatorInt("Direction", (int)direction);
-        strawbert.grasso.EndGrasso();
+        strawbert.Unstall();
     }
 
     public void RotateTarget() {
@@ -147,15 +153,17 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     }
 
     public void Reload() {
+        acornLoaded = true;
         acorn.gameObject.SetActive(false);
         acornAnim.SetActive(true);
     }
 
     void LoadAcorn() {
-        hasAcorn = true;
         acorn = Inventory.TakeAcorn();
         acorn.AssignToSpringleaf(this);
-        acornAnim.SetActive(true);
+
+        acornAssigned = true;
+        Reload();
     }
 
     void ChangeDirection(Direction newDirection) {
