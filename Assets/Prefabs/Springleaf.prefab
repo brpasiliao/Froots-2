@@ -94,6 +94,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5767103532543300705}
   - component: {fileID: 5767103532543300706}
+  - component: {fileID: 1358393038022546171}
+  - component: {fileID: 146940598607882214}
+  - component: {fileID: 1582884368817628751}
   - component: {fileID: 5560598950048917618}
   - component: {fileID: 5767103532543300704}
   - component: {fileID: 5767103532543300707}
@@ -138,11 +141,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 5560598950048917618}
+  loader: {fileID: 1358393038022546171}
+  launcher: {fileID: 146940598607882214}
+  rotation: {fileID: 1582884368817628751}
+  acorn: {fileID: 0}
+  srTemp: {fileID: 5767103534656095741}
+--- !u!114 &1358393038022546171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5767103532543300718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf1d7f12b91f540b081ea03a5e8a5ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  springleaf: {fileID: 5767103532543300706}
+--- !u!114 &146940598607882214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5767103532543300718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 826fd404f7ee24191bca648a672e50d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  springleaf: {fileID: 5767103532543300706}
+  acornAnimation: {fileID: 5767103533224610850}
+--- !u!114 &1582884368817628751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5767103532543300718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43f4ef08be9c94bd580049b229bc7b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  springleaf: {fileID: 5767103532543300706}
   target: {fileID: 5767103533032569171}
   flower: {fileID: 5767103532820201888}
-  acornAnim: {fileID: 5767103533224610850}
-  direction: 4
-  srTemp: {fileID: 5767103534656095741}
+  direction: 1
 --- !u!114 &5560598950048917618
 MonoBehaviour:
   m_ObjectHideFlags: 0
