@@ -10,8 +10,27 @@ public class StrawbertGrasso : MonoBehaviour {
 
     public bool canGrasso { get; set; } = true;
 
+    string currentGrassoAim = "UseGrassoV1";
+    float xInput = 0;
+    float yInput = 1f;
+
     void Update() {
-        if (canGrasso && Input.GetButtonDown("Grasso")) {
+        // if (canGrasso && Input.GetButtonDown("Grasso")) {
+        //     StartCoroutine("UseGrasso");
+        // }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            currentGrassoAim = "UseGrassoV1";
+            EventBroker.CallSendFeedback("Hold right trigger + left stick aim");
+        } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            currentGrassoAim = "UseGrassoV2";
+            EventBroker.CallSendFeedback("Hold right trigger + right stick aim");
+        } else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            currentGrassoAim = "UseGrassoV3";
+            EventBroker.CallSendFeedback("Tap X + right stick aim");
+        }
+
+        if (canGrasso && PressedButtonToAim()) {
             StartCoroutine("UseGrasso");
         }
     }
@@ -20,8 +39,8 @@ public class StrawbertGrasso : MonoBehaviour {
         SwingGrasso();
         
         yield return 0;
-        while (!Input.GetButtonDown("Grasso")) {
-            AimGrasso();
+        while (!PressedButtonToShoot()) {
+            AimGrassoJoystick();
 
             if (Input.GetButtonDown("Cancel")) {
                 EndGrasso();
@@ -40,7 +59,18 @@ public class StrawbertGrasso : MonoBehaviour {
         strawbert.animator.SetAnimatorBool("Swinging", true);
     }
 
-    private void AimGrasso() {
+    private void AimGrassoJoystick() {
+        if (currentGrassoAim.Equals("UseGrassoV1")) {
+            SetJoystickInput("Horizontal", "Vertical");
+        } else {
+            SetJoystickInput("Right Horizontal", "Right Vertical");
+        }
+
+        float angle = Mathf.Atan2(yInput, xInput) * Mathf.Rad2Deg;
+        target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle-90));
+    }
+
+    private void AimGrassoMouse() {
         Vector3 mousePos = Input.mousePosition;
         Vector3 targetPos = Camera.main.WorldToScreenPoint(target.transform.position);
         mousePos.x = mousePos.x - targetPos.x;
@@ -62,5 +92,43 @@ public class StrawbertGrasso : MonoBehaviour {
         canGrasso = true;
         strawbert.movement.canMove = true;
         strawbert.animator.EndGrassoAnimation();
+    }
+
+    bool PressedButtonToAim() {
+        if ((currentGrassoAim.Equals("UseGrassoV1") && 
+                Input.GetButtonDown("Right Trigger")) ||
+                (currentGrassoAim.Equals("UseGrassoV2") &&
+                Input.GetButtonDown("Right Trigger")) ||
+                (currentGrassoAim.Equals("UseGrassoV3") &&
+                Input.GetButtonDown("Grasso"))
+           ) {
+            return true;
+           }
+        
+        return false;
+    }
+
+    void SetJoystickInput(string xAxis, string yAxis) {
+        float xInputRaw = Input.GetAxisRaw(xAxis);
+        float yInputRaw = Input.GetAxisRaw(yAxis);
+
+        if (xInputRaw != 0 || yInputRaw != 0) {
+            xInput = xInputRaw;
+            yInput = yInputRaw;
+        }
+    }
+
+    bool PressedButtonToShoot() {
+        if ((currentGrassoAim.Equals("UseGrassoV1") && 
+                Input.GetButtonUp("Right Trigger")) ||
+                (currentGrassoAim.Equals("UseGrassoV2") &&
+                Input.GetButtonUp("Right Trigger")) ||
+                (currentGrassoAim.Equals("UseGrassoV3") &&
+                Input.GetButtonDown("Grasso"))
+           ) {
+            return true;
+           }
+        
+        return false;
     }
 }

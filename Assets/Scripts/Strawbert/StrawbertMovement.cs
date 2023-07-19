@@ -23,9 +23,9 @@ public class StrawbertMovement : MonoBehaviour {
     }
 
     void Move() {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
-        Vector2 destination = new Vector2(horizontalInput, verticalInput);
+        float xInput = Input.GetAxisRaw("Horizontal");
+        float yInput = Input.GetAxisRaw("Vertical");
+        Vector2 destination = new Vector2(xInput, yInput);
         rb.velocity = destination.normalized * movementSpeed;
     }
 
