@@ -28,6 +28,9 @@ public class StrawbertGrasso : MonoBehaviour {
         } else if (Input.GetKeyDown(KeyCode.Alpha3)) {
             currentGrassoAim = "GrassoAimV3";
             EventBroker.CallSendFeedback("Tap X + right stick aim");
+        } else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            currentGrassoAim = "Mouse";
+            EventBroker.CallSendFeedback("Move mouse");
         }
 
         if (canGrasso && PressedButtonToAim()) {
@@ -40,7 +43,11 @@ public class StrawbertGrasso : MonoBehaviour {
         
         yield return 0;
         while (!PressedButtonToShoot()) {
-            AimGrassoJoystick();
+            if (currentGrassoAim.Equals("Mouse")) {
+                AimGrassoMouse();
+            } else {
+                AimGrassoJoystick();
+            }
 
             if (Input.GetButtonDown("Cancel")) {
                 EndGrasso();
@@ -67,7 +74,7 @@ public class StrawbertGrasso : MonoBehaviour {
         }
 
         float angle = Mathf.Atan2(yInput, xInput) * Mathf.Rad2Deg;
-        target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle-90));
+        target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
     private void AimGrassoMouse() {
@@ -76,7 +83,7 @@ public class StrawbertGrasso : MonoBehaviour {
         mousePos.x = mousePos.x - targetPos.x;
         mousePos.y = mousePos.y - targetPos.y;
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-        target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle-90));
+        target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
     private void ShootGrasso() {
@@ -100,6 +107,8 @@ public class StrawbertGrasso : MonoBehaviour {
                 (currentGrassoAim.Equals("GrassoAimV2") &&
                 Input.GetButtonDown("Right Trigger")) ||
                 (currentGrassoAim.Equals("GrassoAimV3") &&
+                Input.GetButtonDown("Grasso")) ||
+                (currentGrassoAim.Equals("Mouse") &&
                 Input.GetButtonDown("Grasso"))
            ) {
             return true;
@@ -114,6 +123,8 @@ public class StrawbertGrasso : MonoBehaviour {
                 (currentGrassoAim.Equals("GrassoAimV2") &&
                 Input.GetButtonUp("Right Trigger")) ||
                 (currentGrassoAim.Equals("GrassoAimV3") &&
+                Input.GetButtonDown("Grasso")) ||
+                (currentGrassoAim.Equals("Mouse") &&
                 Input.GetButtonDown("Grasso"))
            ) {
             return true;

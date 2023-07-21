@@ -46,7 +46,7 @@ public class SpringleafRotation : MonoBehaviour {
         mousePos.x = mousePos.x - targetScreenPos.x;
         mousePos.y = mousePos.y - targetScreenPos.y;
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-        Quaternion eulerAngle = Quaternion.Euler(new Vector3(0, 0, angle-90));
+        Quaternion eulerAngle = Quaternion.Euler(new Vector3(0, 0, angle));
 
         acornPivot.transform.rotation = eulerAngle;
         targetPivot.transform.rotation = eulerAngle;

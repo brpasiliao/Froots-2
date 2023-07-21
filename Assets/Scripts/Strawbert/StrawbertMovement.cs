@@ -78,6 +78,7 @@ public class StrawbertMovement : MonoBehaviour {
             closestObject = interactableObjects[0];
             isFindingClosestObject = false;
         } else if (interactableObjects.Count == 0) {
+            closestObject = null;
             toRemove.GetDeparted();
         }
     }
