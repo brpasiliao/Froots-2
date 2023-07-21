@@ -54,8 +54,6 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
     public void ChangeToObject(GameObject acornAnimation) {
         acornAnimation.SetActive(false);
         transform.position = acornAnimation.transform.position;
-        Transform acornSprite = acornAnimation.transform.GetChild(0);
-        sprite.transform.rotation = acornSprite.rotation;
         gameObject.SetActive(true);
     }
 

@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3686799633053078745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3114032663336751748}
+  m_Layer: 0
+  m_Name: Acorn Anim Pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3114032663336751748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3686799633053078745}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5767103533224610853}
+  m_Father: {fileID: 5767103532543300705}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4897996115087436320
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +154,7 @@ Transform:
   m_Children:
   - {fileID: 5767103534656095738}
   - {fileID: 3065901621093181032}
-  - {fileID: 5767103533224610853}
+  - {fileID: 3114032663336751748}
   - {fileID: 5767103533032569170}
   - {fileID: 5767103532820201891}
   m_Father: {fileID: 0}
@@ -140,10 +172,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4dba7a768764a70932e1441718bb4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 5560598950048917618}
   loader: {fileID: 1358393038022546171}
   launcher: {fileID: 146940598607882214}
   rotation: {fileID: 1582884368817628751}
+  animator: {fileID: 5560598950048917618}
   acorn: {fileID: 0}
   srTemp: {fileID: 5767103534656095741}
 --- !u!114 &1358393038022546171
@@ -186,7 +218,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   springleaf: {fileID: 5767103532543300706}
-  target: {fileID: 5767103533032569171}
+  acornPivot: {fileID: 3686799633053078745}
+  acornAnimation: {fileID: 5767103533224610850}
+  targetPivot: {fileID: 5767103533032569171}
+  target: {fileID: 5767103533305675955}
   flower: {fileID: 5767103532820201888}
   direction: 1
 --- !u!114 &5560598950048917618
@@ -382,7 +417,7 @@ GameObject:
   - component: {fileID: 5767103533224610854}
   - component: {fileID: 5767103533224610852}
   m_Layer: 0
-  m_Name: AcornAnim
+  m_Name: Acorn Anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -395,14 +430,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5767103533224610850}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.297, y: 0.807, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3633592763258770757}
-  m_Father: {fileID: 5767103532543300705}
-  m_RootOrder: 2
+  m_Father: {fileID: 3114032663336751748}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5767103533224610854
 MonoBehaviour:
@@ -457,7 +492,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5767103533305675955}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

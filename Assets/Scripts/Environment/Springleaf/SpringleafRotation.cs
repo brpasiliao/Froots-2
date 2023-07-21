@@ -8,11 +8,15 @@ public enum Direction {
 
 public class SpringleafRotation : MonoBehaviour {
     [SerializeField] Springleaf springleaf;
+    [SerializeField] GameObject acornPivot;
+    [SerializeField] GameObject acornAnimation;
+    [SerializeField] GameObject targetPivot;
     [SerializeField] GameObject target;
     [SerializeField] GameObject flower;
     [SerializeField] Direction direction = Direction.right;
 
     void Start() {
+        SetTargetDistance();
         ChangeDirection(direction);
     }
 
@@ -37,28 +41,40 @@ public class SpringleafRotation : MonoBehaviour {
 
     public void RotateTarget() {
         Vector3 mousePos = Input.mousePosition;
-        Vector3 targetPos = Camera.main.WorldToScreenPoint(target.transform.position);
-        mousePos.x = mousePos.x - targetPos.x;
-        mousePos.y = mousePos.y - targetPos.y;
+        Vector3 targetPos = targetPivot.transform.position;
+        Vector3 targetScreenPos = Camera.main.WorldToScreenPoint(targetPos);
+        mousePos.x = mousePos.x - targetScreenPos.x;
+        mousePos.y = mousePos.y - targetScreenPos.y;
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-        target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle-90));
+        Quaternion eulerAngle = Quaternion.Euler(new Vector3(0, 0, angle-90));
+
+        acornPivot.transform.rotation = eulerAngle;
+        targetPivot.transform.rotation = eulerAngle;
     }
     
     void ChangeDirection(Direction newDirection) {
         if (newDirection == Direction.up) {
-            target.transform.eulerAngles = new Vector3(0, 0, 90);
+            targetPivot.transform.eulerAngles = new Vector3(0, 0, 90);
         } else if (newDirection == Direction.right) {
-            target.transform.eulerAngles = new Vector3(0, 0, 0);
+            targetPivot.transform.eulerAngles = new Vector3(0, 0, 0);
         } else if (newDirection == Direction.down) {
-            target.transform.eulerAngles = new Vector3(0, 0, -90);
+            targetPivot.transform.eulerAngles = new Vector3(0, 0, -90);
         } else {
-            target.transform.eulerAngles = new Vector3(0, 0, 180);
+            targetPivot.transform.eulerAngles = new Vector3(0, 0, 180);
         }
 
         springleaf.animator.SetAnimatorInt("Direction", (int)newDirection);
     }
 
+    void SetTargetDistance() {
+        float distance = SpringleafSingleton.instance.targetDistance;
+        acornPivot.transform.localScale = new Vector3(distance, 1, 1);
+        acornAnimation.transform.localScale = new Vector3(1/distance, 1, 1);
+        targetPivot.transform.localScale = new Vector3(distance, 1, 1);
+        target.transform.localScale = new Vector3(1/distance, 1, 1);
+    }
+
     public void SetTargetActive(bool setting) {
-        target.SetActive(setting);
+        targetPivot.SetActive(setting);
     }
 }

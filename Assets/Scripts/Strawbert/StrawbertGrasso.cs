@@ -10,7 +10,7 @@ public class StrawbertGrasso : MonoBehaviour {
 
     public bool canGrasso { get; set; } = true;
 
-    string currentGrassoAim = "UseGrassoV1";
+    string currentGrassoAim = "GrassoAimV1";
     float xInput = 0;
     float yInput = 1f;
 
@@ -20,13 +20,13 @@ public class StrawbertGrasso : MonoBehaviour {
         // }
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            currentGrassoAim = "UseGrassoV1";
+            currentGrassoAim = "GrassoAimV1";
             EventBroker.CallSendFeedback("Hold right trigger + left stick aim");
         } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-            currentGrassoAim = "UseGrassoV2";
+            currentGrassoAim = "GrassoAimV2";
             EventBroker.CallSendFeedback("Hold right trigger + right stick aim");
         } else if (Input.GetKeyDown(KeyCode.Alpha3)) {
-            currentGrassoAim = "UseGrassoV3";
+            currentGrassoAim = "GrassoAimV3";
             EventBroker.CallSendFeedback("Tap X + right stick aim");
         }
 
@@ -60,7 +60,7 @@ public class StrawbertGrasso : MonoBehaviour {
     }
 
     private void AimGrassoJoystick() {
-        if (currentGrassoAim.Equals("UseGrassoV1")) {
+        if (currentGrassoAim.Equals("GrassoAimV1")) {
             SetJoystickInput("Horizontal", "Vertical");
         } else {
             SetJoystickInput("Right Horizontal", "Right Vertical");
@@ -95,11 +95,25 @@ public class StrawbertGrasso : MonoBehaviour {
     }
 
     bool PressedButtonToAim() {
-        if ((currentGrassoAim.Equals("UseGrassoV1") && 
+        if ((currentGrassoAim.Equals("GrassoAimV1") && 
                 Input.GetButtonDown("Right Trigger")) ||
-                (currentGrassoAim.Equals("UseGrassoV2") &&
+                (currentGrassoAim.Equals("GrassoAimV2") &&
                 Input.GetButtonDown("Right Trigger")) ||
-                (currentGrassoAim.Equals("UseGrassoV3") &&
+                (currentGrassoAim.Equals("GrassoAimV3") &&
+                Input.GetButtonDown("Grasso"))
+           ) {
+            return true;
+           }
+        
+        return false;
+    }
+
+    bool PressedButtonToShoot() {
+        if ((currentGrassoAim.Equals("GrassoAimV1") && 
+                Input.GetButtonUp("Right Trigger")) ||
+                (currentGrassoAim.Equals("GrassoAimV2") &&
+                Input.GetButtonUp("Right Trigger")) ||
+                (currentGrassoAim.Equals("GrassoAimV3") &&
                 Input.GetButtonDown("Grasso"))
            ) {
             return true;
@@ -116,19 +130,5 @@ public class StrawbertGrasso : MonoBehaviour {
             xInput = xInputRaw;
             yInput = yInputRaw;
         }
-    }
-
-    bool PressedButtonToShoot() {
-        if ((currentGrassoAim.Equals("UseGrassoV1") && 
-                Input.GetButtonUp("Right Trigger")) ||
-                (currentGrassoAim.Equals("UseGrassoV2") &&
-                Input.GetButtonUp("Right Trigger")) ||
-                (currentGrassoAim.Equals("UseGrassoV3") &&
-                Input.GetButtonDown("Grasso"))
-           ) {
-            return true;
-           }
-        
-        return false;
     }
 }

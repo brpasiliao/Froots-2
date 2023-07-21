@@ -20,6 +20,7 @@ public class SpringleafLauncher : MonoBehaviour {
         acornSunk = false;
         springleaf.loader.acornLoaded = false;
 
+        springleaf.animator.PlayLaunchAnimation();
         springleaf.animator.SetAnimatorBool("Launching", true);
         acornAnimation.SetActive(true);
 
