@@ -38,17 +38,17 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
         EventBroker.CallAcornCount();
     }
 
-    public void AssignToSpringleaf(Springleaf springleaf) {
-        transform.SetParent(springleaf.transform);
-        this.springleaf = springleaf;
-    }
-
     public void Reload() {
         if (springleaf != null) {
             springleaf.loader.ReloadAcorn();
         } else {
             EventBroker.CallSendFeedback("Already tagged!");
         }
+    }
+
+    public void AssignToSpringleaf(Springleaf springleaf) {
+        transform.SetParent(springleaf.transform);
+        this.springleaf = springleaf;
     }
 
     public void ChangeToObject(GameObject acornAnimation) {
