@@ -6,6 +6,7 @@ public class StrawbertBehavior : MonoBehaviour {
     public StrawbertMovement movement;
     public StrawbertGrasso grasso;
     public StrawbertAnimator animator;
+    public Flower flower;
 
     void Update() {
         if (Input.GetButtonDown("Primary")) {

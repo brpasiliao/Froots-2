@@ -56,6 +56,11 @@ public class SpringleafLauncher : MonoBehaviour {
             if (collider.TryGetComponent<LandLeaves>(out LandLeaves landLeaves)) {
                 landLeaves.Break();
             }
+            if (collider.TryGetComponent<Hole>(out Hole hole)) {
+                acornAnimation.SetActive(false);
+                acornSunk = true;
+                hole.Plug();
+            }
         }
     }
 

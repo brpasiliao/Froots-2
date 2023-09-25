@@ -5,6 +5,7 @@ using System;
 
 public class Acorn : MonoBehaviour, IInteractable, ITaggable {
     public bool isTagged { get; set; } = false;
+    [SerializeField] Rigidbody2D rb;
     [SerializeField] SpriteRenderer srTemp;
 
     SpriteRenderer sr;
@@ -14,6 +15,14 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
 
     void Awake() {
         sr = srTemp;
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.TryGetComponent<Hole>(out Hole hole) && 
+            rb.velocity.x + rb.velocity.y != 0) {
+            hole.Plug();
+            SetObjectActive(false);
+        }
     }
 
     public void DoPrimary() {
@@ -36,6 +45,7 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable {
         isTagged = true;
         Inventory.AddAcorn(this);
         EventBroker.CallAcornCount();
+        // rb.AddForce(new Vector3(1f, 0, 0));
     }
 
     public void Reload() {

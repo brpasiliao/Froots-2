@@ -5,7 +5,6 @@ using UnityEngine;
 public class StrawbertGrasso : MonoBehaviour {
     [SerializeField] StrawbertBehavior strawbert;
     [SerializeField] GameObject target;
-    [SerializeField] GameObject flower;
     [SerializeField] public float rotationSpeed;
 
     public bool canGrasso { get; set; } = true;
@@ -62,7 +61,7 @@ public class StrawbertGrasso : MonoBehaviour {
     private void SwingGrasso() {
         canGrasso = false;
         target.SetActive(true);
-        flower.SetActive(true);
+        strawbert.flower.SetObjectActive(true);
         strawbert.animator.SetAnimatorBool("Swinging", true);
     }
 
@@ -90,6 +89,8 @@ public class StrawbertGrasso : MonoBehaviour {
         strawbert.movement.canMove = false;
         strawbert.movement.StopMovement();
         strawbert.animator.SetAnimatorBool("Shooting", true);
+        strawbert.flower.Shoot();
+        // EndGrasso();
     }
 
     public void EndGrasso() {
