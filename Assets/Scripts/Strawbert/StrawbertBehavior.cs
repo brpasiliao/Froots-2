@@ -26,13 +26,13 @@ public class StrawbertBehavior : MonoBehaviour {
         EventBroker.onDialogueEnd -= Unstall;
     }
 
-    void OnTriggerEnter2D(Collider2D other) {
+    void OnTriggerEnter(Collider other) {
         if (other.isTrigger && other.TryGetComponent<IInteractable>(out IInteractable interacted)) {
             movement.AddInteractable(interacted);
         }
     }
 
-    void OnTriggerExit2D(Collider2D other) {
+    void OnTriggerExit(Collider other) {
         if (other.isTrigger && other.TryGetComponent<IInteractable>(out IInteractable interacted)) {
             movement.RemoveInteractable(interacted);
         }

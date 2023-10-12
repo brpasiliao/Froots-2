@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StrawbertMovement : MonoBehaviour {
-    [SerializeField] Rigidbody2D rb;
+    [SerializeField] Rigidbody rb;
     [SerializeField] float movementSpeed;
 
     List<IInteractable> interactableObjects = new List<IInteractable>();
@@ -24,13 +24,13 @@ public class StrawbertMovement : MonoBehaviour {
 
     void Move() {
         float xInput = Input.GetAxisRaw("Horizontal");
-        float yInput = Input.GetAxisRaw("Vertical");
-        Vector2 destination = new Vector2(xInput, yInput);
+        float zInput = Input.GetAxisRaw("Vertical");
+        Vector3 destination = new Vector3(xInput, 0, zInput);
         rb.velocity = destination.normalized * movementSpeed;
     }
 
     public void StopMovement() {
-        rb.velocity = Vector2.zero;
+        rb.velocity = Vector3.zero;
     }
 
     public void FindClosestObject() {

@@ -13,6 +13,9 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     [SerializeField] SpriteRenderer srTemp;
     public static StrawbertBehavior strawbert;
 
+    public Vector3 launchAngle;
+    public float launchMultiplier;
+
     SpriteRenderer sr;
 
     void Awake() {
