@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Applewood : MonoBehaviour {
+public class Applewood : MonoBehaviour, IHideable {
     [SerializeField] Animator anim;
 
-    void OnTriggerEnter2D(Collider2D other) {
+    public bool isRevealed { get; set; } = false;
+
+    void OnTriggerEnter(Collider other) {
         if (other.isTrigger && other.CompareTag("Player")) {
             Inventory.applewoods++;
             EventBroker.CallApplewoodCount();
@@ -15,5 +17,10 @@ public class Applewood : MonoBehaviour {
 
     void Deactivate() {
         gameObject.SetActive(false);
+    }
+
+    public void Reveal() {
+        isRevealed = true;
+        gameObject.SetActive(true);
     }
 }
