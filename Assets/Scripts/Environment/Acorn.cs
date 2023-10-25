@@ -59,7 +59,7 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable, IHideable {
             rb.velocity.x + rb.velocity.z != 0
         ) {
             hole.Plug();
-            SetObjectActive(false);
+            GetPlugged();
         }
 
         if (isLaunching && !alreadyHit) {
@@ -73,20 +73,21 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable, IHideable {
 
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, col.radius);
             foreach (Collider hitCollider in hitColliders) {
-        //         // if (collider.CompareTag("River")) {
-        //         //     acornSunk = true;
-        //         // }
-        //         // if (collider.TryGetComponent<OakLeaves>(out OakLeaves oakLeaves)) {
-        //         //     acornSunk = true;
-        //         //     oakLeaves.Disperse();
-        //         // }
+                // if (collider.CompareTag("River")) {
+                //     acornSunk = true;
+                // }
+                // if (collider.TryGetComponent<OakLeaves>(out OakLeaves oakLeaves)) {
+                //     acornSunk = true;
+                //     oakLeaves.Disperse();
+                // }
                 if (hitCollider.TryGetComponent<LandLeaves>(out LandLeaves landLeaves)) {
                     landLeaves.EndBreak();
                 }
-        //         // if (collider.TryGetComponent<Hole>(out Hole hole)) {
-        //         //     acornSunk = true;
-        //         //     hole.Plug();
-        //         // }
+                if (hitCollider.TryGetComponent<Hole>(out Hole hitHole)) {
+                    // acornSunk = true;
+                    hitHole.Plug();
+                    GetPlugged();
+                }
             }
         }
     }
@@ -171,6 +172,15 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable, IHideable {
         acornAnimation.SetActive(false);
         transform.position = acornAnimation.transform.position;
         gameObject.SetActive(true);
+    }
+
+    private void GetPlugged() {
+        // set parent to be acorns object
+        if (springleaf != null) {
+            springleaf.loader.Reset();
+        }
+        
+        SetObjectActive(false);
     }
 
     public void SetObjectActive(bool setting) {

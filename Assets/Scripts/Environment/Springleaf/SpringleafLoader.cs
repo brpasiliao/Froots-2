@@ -45,4 +45,10 @@ public class SpringleafLoader : MonoBehaviour {
 
         EventBroker.CallSendFeedback(reloadedAcorn);
     }
+
+    public void Reset() {
+        acornAssigned = false;
+        acornLoaded = false;
+        springleaf.acorn = null;
+    }
 }
