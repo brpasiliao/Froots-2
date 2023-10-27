@@ -1,23 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class StrawbertBehavior : MonoBehaviour {
     public StrawbertMovement movement;
     public StrawbertGrasso grasso;
     public StrawbertAnimator animator;
 
+    [SerializeField] PlayerInputActions playerInputActions;
+
+    private void Awake()
+    {
+        movement = gameObject.GetComponent<StrawbertMovement>();
+        playerInputActions = InputManager.inputActions;
+    }
     void Update() {
-        if (Input.GetButtonDown("Primary")) {
+        /*if (Input.GetButtonDown("Primary")) {
             PrimaryAction();
         } else if (Input.GetButtonDown("Secondary")) {
             SecondaryAction();
-        }
+        }*/
     }
 
     private void OnEnable() {
         EventBroker.onDialoguePlay += Stall;
         EventBroker.onDialogueEnd += Unstall;
+        playerInputActions.Player.PrimaryAction.performed += PrimaryAction;
+        playerInputActions.Player.SecondaryAction.performed += SecondaryAction;
     }
 
     private void OnDisable() {
@@ -37,17 +47,19 @@ public class StrawbertBehavior : MonoBehaviour {
         }
     }
 
-    void PrimaryAction() {
-        if (grasso.canGrasso) {
+    void PrimaryAction(InputAction.CallbackContext context) {
+        if (context.performed && grasso.canGrasso)
+        {
             IInteractable interacted = movement.GetClosestObject();
-            if (interacted != null) {
+            if (interacted != null)
+            {
                 interacted.DoPrimary();
             }
         }
     }
 
-    void SecondaryAction() {
-        if (grasso.canGrasso) {
+    void SecondaryAction(InputAction.CallbackContext context) {
+        if (context.performed && grasso.canGrasso) {
             IInteractable interacted = movement.GetClosestObject();
             if (interacted != null) {
                 interacted.DoSecondary();

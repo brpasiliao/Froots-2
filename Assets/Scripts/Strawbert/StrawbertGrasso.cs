@@ -8,11 +8,19 @@ public class StrawbertGrasso : MonoBehaviour {
     [SerializeField] GameObject flower;
     [SerializeField] public float rotationSpeed;
 
+    public PlayerInputActions playerInputActions;
+
     public bool canGrasso { get; set; } = true;
 
     string currentGrassoAim = "GrassoAimV1";
     float xInput = 0;
     float yInput = 1f;
+
+    private void Awake()
+    {
+        playerInputActions = InputManager.inputActions;
+        //playerInputActions = new PlayerInputActions();
+    }
 
     void Update() {
         // if (canGrasso && Input.GetButtonDown("Grasso")) {
@@ -22,18 +30,24 @@ public class StrawbertGrasso : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
             currentGrassoAim = "GrassoAimV1";
             EventBroker.CallSendFeedback("Hold right trigger + left stick aim");
+            //InputManager.ToggleActionMap(playerInputActions.GrassoAimV1);
+            InputManager.ChangeGrassoControls(playerInputActions.GrassoAimV1);
         } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
             currentGrassoAim = "GrassoAimV2";
             EventBroker.CallSendFeedback("Hold right trigger + right stick aim");
+            //InputManager.ToggleActionMap(playerInputActions.GrassoAimV2);
+            InputManager.ChangeGrassoControls(playerInputActions.GrassoAimV2);
         } else if (Input.GetKeyDown(KeyCode.Alpha3)) {
             currentGrassoAim = "GrassoAimV3";
             EventBroker.CallSendFeedback("Tap X + right stick aim");
+            //InputManager.ToggleActionMap(playerInputActions.GrassoAimV3);
+            InputManager.ChangeGrassoControls(playerInputActions.GrassoAimV3);
         } else if (Input.GetKeyDown(KeyCode.Alpha4)) {
             currentGrassoAim = "Mouse";
             EventBroker.CallSendFeedback("Move mouse");
         }
 
-        if (canGrasso && PressedButtonToAim()) {
+        if (canGrasso && (PressedButtonToAim())){  //|| playerInputActions.Player.Grasso.triggered)) {
             StartCoroutine("UseGrasso");
         }
     }
@@ -42,7 +56,7 @@ public class StrawbertGrasso : MonoBehaviour {
         SwingGrasso();
         
         yield return 0;
-        while (!PressedButtonToShoot()) {
+        while (!PressedButtonToShoot()) {  //&& !playerInputActions.Player.Grasso.triggered) {
             if (currentGrassoAim.Equals("Mouse")) {
                 AimGrassoMouse();
             } else {
@@ -101,7 +115,7 @@ public class StrawbertGrasso : MonoBehaviour {
         strawbert.animator.EndGrassoAnimation();
     }
 
-    bool PressedButtonToAim() {
+    /*bool PressedButtonToAim() {
         if ((currentGrassoAim.Equals("GrassoAimV1") && 
                 Input.GetButtonDown("Right Trigger")) ||
                 (currentGrassoAim.Equals("GrassoAimV2") &&
@@ -114,10 +128,28 @@ public class StrawbertGrasso : MonoBehaviour {
             return true;
            }
         
+        return false;
+    }*/
+
+    bool PressedButtonToAim()
+    {
+        if ((playerInputActions.GrassoAimV1.enabled &&
+                 playerInputActions.GrassoAimV1.Grasso.WasPressedThisFrame()) ||
+                 (playerInputActions.GrassoAimV2.enabled &&
+                 playerInputActions.GrassoAimV2.Grasso.WasPressedThisFrame()) ||
+                 (playerInputActions.GrassoAimV3.enabled &&
+                 playerInputActions.GrassoAimV3.Grasso.triggered) ||
+                 (currentGrassoAim.Equals("Mouse") &&
+                 Input.GetButtonDown("Grasso"))
+            )
+        {
+            return true;
+        }
+
         return false;
     }
 
-    bool PressedButtonToShoot() {
+    /*bool PressedButtonToShoot() {
         if ((currentGrassoAim.Equals("GrassoAimV1") && 
                 Input.GetButtonUp("Right Trigger")) ||
                 (currentGrassoAim.Equals("GrassoAimV2") &&
@@ -131,11 +163,51 @@ public class StrawbertGrasso : MonoBehaviour {
            }
         
         return false;
+    }*/
+
+    bool PressedButtonToShoot()
+    {
+        if ((playerInputActions.GrassoAimV1.enabled &&
+                playerInputActions.GrassoAimV1.Grasso.WasReleasedThisFrame()) ||
+                (playerInputActions.GrassoAimV2.enabled &&
+                playerInputActions.GrassoAimV2.Grasso.WasReleasedThisFrame()) ||
+                (playerInputActions.GrassoAimV3.enabled &&
+                playerInputActions.GrassoAimV3.Grasso.triggered) ||
+                (currentGrassoAim.Equals("Mouse") &&
+                Input.GetButtonDown("Grasso"))
+           )
+        {
+            return true;
+        }
+
+        return false;
     }
+
 
     void SetJoystickInput(string xAxis, string yAxis) {
-        float xInputRaw = Input.GetAxisRaw(xAxis);
-        float yInputRaw = Input.GetAxisRaw(yAxis);
+        Vector2 inputVector;
+
+
+        if (playerInputActions.GrassoAimV1.enabled)
+        {
+            inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
+        }
+        else if (playerInputActions.GrassoAimV2.enabled)
+        {
+            inputVector = playerInputActions.GrassoAimV2.GrassoDirection.ReadValue<Vector2>();
+        }
+        else if (playerInputActions.GrassoAimV3.enabled)
+        {
+            inputVector = playerInputActions.GrassoAimV3.GrassoDirection.ReadValue<Vector2>();
+        }
+        else
+        {
+            inputVector = Vector2.zero;
+            Debug.Log("No input available");
+        }
+
+        float xInputRaw = inputVector.x; //Input.GetAxisRaw(xAxis);
+        float yInputRaw = inputVector.y; //Input.GetAxisRaw(yAxis);
 
         if (xInputRaw != 0 || yInputRaw != 0) {
             xInput = xInputRaw;

@@ -30,7 +30,14 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     }
 
     public void DoSecondary() {
-        rotation.RotateSpringleaf();
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            rotation.RotateSpringleaf(true);
+        }
+        else
+        {
+            rotation.RotateSpringleaf(false);
+        }
     }
 
     public void GetApproached() {

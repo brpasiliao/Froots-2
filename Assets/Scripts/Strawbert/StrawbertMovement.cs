@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class StrawbertMovement : MonoBehaviour {
     [SerializeField] Rigidbody2D rb;
     [SerializeField] float movementSpeed;
+
+    private PlayerInputActions playerInputActions;
 
     List<IInteractable> interactableObjects = new List<IInteractable>();
     IInteractable closestObject;
@@ -12,9 +15,19 @@ public class StrawbertMovement : MonoBehaviour {
 
     public bool canMove { get; set; } = true;
 
+    private void Awake()
+    {
+        playerInputActions = InputManager.inputActions;
+
+    }
+
+
     void FixedUpdate() {
         if (canMove) {
-            Move();
+            //Move();
+            Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
+            Vector2 destination = new Vector2(inputVector.x, inputVector.y);
+            rb.velocity = destination.normalized * movementSpeed;
         }
 
         if (isFindingClosestObject) {
