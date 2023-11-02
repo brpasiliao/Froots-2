@@ -17,8 +17,6 @@ public class StrawbertAnimator : MonoBehaviour {
 
     public void EndGrassoAnimation() {
         SetAnimatorBool("Swinging", false);
-        SetAnimatorBool("Shooting", false);
-        SetAnimatorBool("Wrapping", false);
     }
 
     public void SetAnimation(bool setting) {

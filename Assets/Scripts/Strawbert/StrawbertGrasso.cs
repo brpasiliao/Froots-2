@@ -10,14 +10,10 @@ public class StrawbertGrasso : MonoBehaviour {
     public bool canGrasso { get; set; } = true;
 
     string currentGrassoAim = "GrassoAimV1";
-    float xInput = 0;
-    float yInput = 1f;
+    public float xInput = 0;
+    public float yInput = 1f;
 
     void Update() {
-        // if (canGrasso && Input.GetButtonDown("Grasso")) {
-        //     StartCoroutine("UseGrasso");
-        // }
-
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
             currentGrassoAim = "GrassoAimV1";
             EventBroker.CallSendFeedback("Hold right trigger + left stick aim");
@@ -72,25 +68,23 @@ public class StrawbertGrasso : MonoBehaviour {
             SetJoystickInput("Right Horizontal", "Right Vertical");
         }
 
-        float angle = Mathf.Atan2(yInput, xInput) * Mathf.Rad2Deg;
-        target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        float angle = Mathf.Atan2(yInput, xInput) * Mathf.Rad2Deg * -1;
+        target.transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
     }
 
     private void AimGrassoMouse() {
         Vector3 mousePos = Input.mousePosition;
         Vector3 targetPos = Camera.main.WorldToScreenPoint(target.transform.position);
-        mousePos.x = mousePos.x - targetPos.x;
-        mousePos.y = mousePos.y - targetPos.y;
-        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-        target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        xInput = mousePos.x - targetPos.x;
+        yInput = mousePos.y - targetPos.y;
+        float angle = Mathf.Atan2(yInput, xInput) * Mathf.Rad2Deg * -1;
+        target.transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
     }
 
     private void ShootGrasso() {
         strawbert.movement.canMove = false;
         strawbert.movement.StopMovement();
-        strawbert.animator.SetAnimatorBool("Shooting", true);
-        strawbert.flower.Shoot();
-        // EndGrasso();
+        strawbert.flower.StartShoot();
     }
 
     public void EndGrasso() {

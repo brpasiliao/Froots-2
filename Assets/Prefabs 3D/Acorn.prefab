@@ -156,7 +156,7 @@ MonoBehaviour:
   rb: {fileID: 4800218675926760141}
   col: {fileID: 3573441170104833201}
   srTemp: {fileID: 1335908473824584810}
-  velocityThreshold: 0.7
+  velocityThreshold: 0.5
   springleaf: {fileID: 0}
   isLaunching: 0
 --- !u!136 &3573441170104833201

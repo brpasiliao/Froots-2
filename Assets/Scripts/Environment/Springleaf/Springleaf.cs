@@ -48,7 +48,6 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
 
     public void GetGrabbed() {
         strawbert.transform.position = transform.position;
-        strawbert.grasso.EndGrasso();
     }
 
     public void StallStrawbert(List<string> dialogue) {
