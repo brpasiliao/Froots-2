@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class UIHandler : MonoBehaviour {
     [SerializeField] TMP_Text acornsText;
@@ -13,6 +14,12 @@ public class UIHandler : MonoBehaviour {
     [SerializeField] TMP_Text dialogueText;
 
     public float popupTime;
+
+    public PlayerInputActions playerInputActions;
+    private void Awake()
+    {
+        playerInputActions = InputManager.inputActions;
+    }
 
     private void OnEnable() {
         EventBroker.onAcornCount += UpdateAcornCount;
@@ -27,7 +34,6 @@ public class UIHandler : MonoBehaviour {
         EventBroker.onFeedbackSend -= SendFeedback;
         EventBroker.onDialoguePlay -= StartPlayDialogue;
     }
-
     void UpdateAcornCount() {
         acornsText.text = Inventory.GetAcornCountString();
     }
@@ -62,7 +68,7 @@ public class UIHandler : MonoBehaviour {
             LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueTextbox);
 
             yield return 0;
-            while (!Input.GetButtonDown("Primary")) 
+            while (!playerInputActions.Player.PrimaryAction.triggered) 
                 yield return null;
         }
 

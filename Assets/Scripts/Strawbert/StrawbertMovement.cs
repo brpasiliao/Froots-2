@@ -6,11 +6,20 @@ public class StrawbertMovement : MonoBehaviour {
     [SerializeField] Rigidbody2D rb;
     [SerializeField] float movementSpeed;
 
+    private PlayerInputActions playerInputActions;
+
     List<IInteractable> interactableObjects = new List<IInteractable>();
     IInteractable closestObject;
     bool isFindingClosestObject;
 
     public bool canMove { get; set; } = true;
+
+    private void Awake()
+    {
+        playerInputActions = InputManager.inputActions;
+
+    }
+
 
     void FixedUpdate() {
         if (canMove) {
@@ -23,10 +32,9 @@ public class StrawbertMovement : MonoBehaviour {
     }
 
     void Move() {
-        float xInput = Input.GetAxisRaw("Horizontal");
-        float yInput = Input.GetAxisRaw("Vertical");
-        Vector2 destination = new Vector2(xInput, yInput);
-        rb.velocity = destination.normalized * movementSpeed;
+            Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
+            Vector2 destination = new Vector2(inputVector.x, inputVector.y);
+            rb.velocity = destination.normalized * movementSpeed;
     }
 
     public void StopMovement() {

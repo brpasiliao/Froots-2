@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public enum Direction {
@@ -15,12 +16,27 @@ public class SpringleafRotation : MonoBehaviour {
     [SerializeField] GameObject flower;
     [SerializeField] Direction direction = Direction.right;
 
+    public PlayerInputActions playerInputActions;
+    private float xInput;
+    private float yInput;
+    private bool onKeyboard;
+
+    private void Awake()
+    {
+        playerInputActions = InputManager.inputActions;
+    }
+
     void Start() {
         SetTargetDistance();
         ChangeDirection(direction);
     }
 
-    public void RotateSpringleaf() {
+    public void RotateSpringleaf(bool onKeyboardcheck) {
+        if (onKeyboardcheck)
+            onKeyboard = true;
+        else if(!onKeyboardcheck)
+            onKeyboard = false;
+        
         StartCoroutine("RotatingAction");
     }
 
@@ -29,7 +45,7 @@ public class SpringleafRotation : MonoBehaviour {
         flower.SetActive(true);
 
         yield return 0;
-        while (!Input.GetButtonDown("Secondary")) {
+        while (!playerInputActions.Player.SecondaryAction.triggered) {
             RotateTarget();
             yield return null;
         }
@@ -40,7 +56,7 @@ public class SpringleafRotation : MonoBehaviour {
     }
 
     public void RotateTarget() {
-        Vector3 mousePos = Input.mousePosition;
+        Vector3 mousePos = playerInputActions.Player.SecondaryMovement.ReadValue<Vector2>();
         Vector3 targetPos = targetPivot.transform.position;
         Vector3 targetScreenPos = Camera.main.WorldToScreenPoint(targetPos);
         mousePos.x = mousePos.x - targetScreenPos.x;
@@ -48,8 +64,33 @@ public class SpringleafRotation : MonoBehaviour {
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
         Quaternion eulerAngle = Quaternion.Euler(new Vector3(0, 0, angle));
 
-        acornPivot.transform.rotation = eulerAngle;
-        targetPivot.transform.rotation = eulerAngle;
+        //Joystick Controls
+        Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
+
+        float xInputRaw = inputVector.x; //Input.GetAxisRaw(xAxis);
+        float yInputRaw = inputVector.y; //Input.GetAxisRaw(yAxis);
+
+
+
+        if (xInputRaw != 0 || yInputRaw != 0)
+        {
+            xInput = xInputRaw;
+            yInput = yInputRaw;
+        }
+
+        float joyStickAngle = Mathf.Atan2(yInput, xInput) * Mathf.Rad2Deg;
+        Quaternion eulerJoyStickAngle = Quaternion.Euler(new Vector3(0, 0, joyStickAngle));
+
+        if (!onKeyboard)
+        {
+            acornPivot.transform.rotation = eulerJoyStickAngle;
+            targetPivot.transform.rotation = eulerJoyStickAngle;
+        }
+        else if(onKeyboard)
+        {
+            acornPivot.transform.rotation = eulerAngle;
+            targetPivot.transform.rotation = eulerAngle;
+        }
     }
     
     void ChangeDirection(Direction newDirection) {
