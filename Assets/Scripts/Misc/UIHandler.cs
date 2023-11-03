@@ -68,7 +68,7 @@ public class UIHandler : MonoBehaviour {
             LayoutRebuilder.ForceRebuildLayoutImmediate(dialogueTextbox);
 
             yield return 0;
-            while (!Input.GetButtonDown("Primary") && !playerInputActions.Player.PrimaryAction.triggered) 
+            while (!playerInputActions.Player.PrimaryAction.triggered) 
                 yield return null;
         }
 

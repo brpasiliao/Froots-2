@@ -32,7 +32,6 @@ public class InputManager : MonoBehaviour
         inputActions.Disable();
         actionMapchange?.Invoke(actionMap);
         actionMap.Enable();
-        Debug.Log(actionMap.name + " " + actionMap.enabled);
     }
 
     public static void ChangeGrassoControls(InputActionMap actionmap)
@@ -47,21 +46,18 @@ public class InputManager : MonoBehaviour
             inputActions.GrassoAimV1.Enable();
             inputActions.GrassoAimV2.Disable();
             inputActions.GrassoAimV3.Disable();
-            Debug.Log("works v1");
         }
         else if(actionmap.name == "GrassoAimV2")
         {
             inputActions.GrassoAimV1.Disable();
             inputActions.GrassoAimV2.Enable();
             inputActions.GrassoAimV3.Disable();
-            Debug.Log("works v2");
         }
         else if(actionmap.name == "GrassoAimV3")
         {
             inputActions.GrassoAimV1.Disable();
             inputActions.GrassoAimV2.Disable();
             inputActions.GrassoAimV3.Enable();
-            Debug.Log("works v3");
         }
     }
 }

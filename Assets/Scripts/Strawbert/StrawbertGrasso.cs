@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class StrawbertGrasso : MonoBehaviour {
     [SerializeField] StrawbertBehavior strawbert;
@@ -9,45 +10,39 @@ public class StrawbertGrasso : MonoBehaviour {
     [SerializeField] public float rotationSpeed;
 
     public PlayerInputActions playerInputActions;
+    private bool mouseControl;
 
     public bool canGrasso { get; set; } = true;
 
-    string currentGrassoAim = "GrassoAimV1";
     float xInput = 0;
     float yInput = 1f;
 
     private void Awake()
     {
         playerInputActions = InputManager.inputActions;
-        //playerInputActions = new PlayerInputActions();
+    }
+
+    private void Start()
+    {
+        InputManager.ChangeGrassoControls(playerInputActions.GrassoAimV1);
     }
 
     void Update() {
-        // if (canGrasso && Input.GetButtonDown("Grasso")) {
-        //     StartCoroutine("UseGrasso");
-        // }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            currentGrassoAim = "GrassoAimV1";
+        if (playerInputActions.Player.Option1.triggered) {
             EventBroker.CallSendFeedback("Hold right trigger + left stick aim");
-            //InputManager.ToggleActionMap(playerInputActions.GrassoAimV1);
             InputManager.ChangeGrassoControls(playerInputActions.GrassoAimV1);
-        } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-            currentGrassoAim = "GrassoAimV2";
+        } else if (playerInputActions.Player.Option2.triggered) {
             EventBroker.CallSendFeedback("Hold right trigger + right stick aim");
-            //InputManager.ToggleActionMap(playerInputActions.GrassoAimV2);
             InputManager.ChangeGrassoControls(playerInputActions.GrassoAimV2);
-        } else if (Input.GetKeyDown(KeyCode.Alpha3)) {
-            currentGrassoAim = "GrassoAimV3";
+        } else if (playerInputActions.Player.Option3.triggered) {
             EventBroker.CallSendFeedback("Tap X + right stick aim");
-            //InputManager.ToggleActionMap(playerInputActions.GrassoAimV3);
             InputManager.ChangeGrassoControls(playerInputActions.GrassoAimV3);
-        } else if (Input.GetKeyDown(KeyCode.Alpha4)) {
-            currentGrassoAim = "Mouse";
+        } else if (playerInputActions.Player.Option4.triggered) {
             EventBroker.CallSendFeedback("Move mouse");
         }
 
-        if (canGrasso && (PressedButtonToAim())){  //|| playerInputActions.Player.Grasso.triggered)) {
+        if (canGrasso && (PressedButtonToAim())){
             StartCoroutine("UseGrasso");
         }
     }
@@ -56,20 +51,23 @@ public class StrawbertGrasso : MonoBehaviour {
         SwingGrasso();
         
         yield return 0;
-        while (!PressedButtonToShoot()) {  //&& !playerInputActions.Player.Grasso.triggered) {
-            if (currentGrassoAim.Equals("Mouse")) {
-                AimGrassoMouse();
-            } else {
-                AimGrassoJoystick();
+        while (!PressedButtonToShoot()) { 
+            
+            if (Keyboard.current.spaceKey.isPressed) {
+                mouseControl = true;
             }
 
-            if (Input.GetButtonDown("Cancel")) {
+            AimGrassoMouse(mouseControl);
+            AimGrassoJoystick(mouseControl);
+
+            if (playerInputActions.Player.SecondaryAction.triggered) {
+                mouseControl = false;
                 EndGrasso();
             }
-
             yield return null;
         }
 
+        mouseControl = false;
         ShootGrasso();
     }
 
@@ -80,24 +78,35 @@ public class StrawbertGrasso : MonoBehaviour {
         strawbert.animator.SetAnimatorBool("Swinging", true);
     }
 
-    private void AimGrassoJoystick() {
-        if (currentGrassoAim.Equals("GrassoAimV1")) {
-            SetJoystickInput("Horizontal", "Vertical");
-        } else {
-            SetJoystickInput("Right Horizontal", "Right Vertical");
-        }
+    private void AimGrassoJoystick(bool mouseInUse) {
 
-        float angle = Mathf.Atan2(yInput, xInput) * Mathf.Rad2Deg;
-        target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        if (mouseInUse)
+        {
+            return;
+        }
+        else
+        {
+            SetJoystickInput();
+
+            float angle = Mathf.Atan2(yInput, xInput) * Mathf.Rad2Deg;
+            target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        }
     }
 
-    private void AimGrassoMouse() {
-        Vector3 mousePos = Input.mousePosition;
-        Vector3 targetPos = Camera.main.WorldToScreenPoint(target.transform.position);
-        mousePos.x = mousePos.x - targetPos.x;
-        mousePos.y = mousePos.y - targetPos.y;
-        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-        target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    private void AimGrassoMouse(bool mouseInUse) {
+        if (!mouseInUse)
+        {
+            return;
+        }
+        else
+        {
+            Vector3 mousePos = playerInputActions.Player.SecondaryMovement.ReadValue<Vector2>();
+            Vector3 targetPos = Camera.main.WorldToScreenPoint(target.transform.position);
+            mousePos.x = mousePos.x - targetPos.x;
+            mousePos.y = mousePos.y - targetPos.y;
+            float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+            target.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        }
     }
 
     private void ShootGrasso() {
@@ -115,22 +124,6 @@ public class StrawbertGrasso : MonoBehaviour {
         strawbert.animator.EndGrassoAnimation();
     }
 
-    /*bool PressedButtonToAim() {
-        if ((currentGrassoAim.Equals("GrassoAimV1") && 
-                Input.GetButtonDown("Right Trigger")) ||
-                (currentGrassoAim.Equals("GrassoAimV2") &&
-                Input.GetButtonDown("Right Trigger")) ||
-                (currentGrassoAim.Equals("GrassoAimV3") &&
-                Input.GetButtonDown("Grasso")) ||
-                (currentGrassoAim.Equals("Mouse") &&
-                Input.GetButtonDown("Grasso"))
-           ) {
-            return true;
-           }
-        
-        return false;
-    }*/
-
     bool PressedButtonToAim()
     {
         if ((playerInputActions.GrassoAimV1.enabled &&
@@ -138,9 +131,7 @@ public class StrawbertGrasso : MonoBehaviour {
                  (playerInputActions.GrassoAimV2.enabled &&
                  playerInputActions.GrassoAimV2.Grasso.WasPressedThisFrame()) ||
                  (playerInputActions.GrassoAimV3.enabled &&
-                 playerInputActions.GrassoAimV3.Grasso.triggered) ||
-                 (currentGrassoAim.Equals("Mouse") &&
-                 Input.GetButtonDown("Grasso"))
+                 playerInputActions.GrassoAimV3.Grasso.triggered)
             )
         {
             return true;
@@ -149,21 +140,6 @@ public class StrawbertGrasso : MonoBehaviour {
         return false;
     }
 
-    /*bool PressedButtonToShoot() {
-        if ((currentGrassoAim.Equals("GrassoAimV1") && 
-                Input.GetButtonUp("Right Trigger")) ||
-                (currentGrassoAim.Equals("GrassoAimV2") &&
-                Input.GetButtonUp("Right Trigger")) ||
-                (currentGrassoAim.Equals("GrassoAimV3") &&
-                Input.GetButtonDown("Grasso")) ||
-                (currentGrassoAim.Equals("Mouse") &&
-                Input.GetButtonDown("Grasso"))
-           ) {
-            return true;
-           }
-        
-        return false;
-    }*/
 
     bool PressedButtonToShoot()
     {
@@ -172,9 +148,7 @@ public class StrawbertGrasso : MonoBehaviour {
                 (playerInputActions.GrassoAimV2.enabled &&
                 playerInputActions.GrassoAimV2.Grasso.WasReleasedThisFrame()) ||
                 (playerInputActions.GrassoAimV3.enabled &&
-                playerInputActions.GrassoAimV3.Grasso.triggered) ||
-                (currentGrassoAim.Equals("Mouse") &&
-                Input.GetButtonDown("Grasso"))
+                playerInputActions.GrassoAimV3.Grasso.triggered)
            )
         {
             return true;
@@ -184,7 +158,8 @@ public class StrawbertGrasso : MonoBehaviour {
     }
 
 
-    void SetJoystickInput(string xAxis, string yAxis) {
+    void SetJoystickInput()
+    {
         Vector2 inputVector;
 
 

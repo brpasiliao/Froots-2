@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.InputSystem;
 
 public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     public SpringleafLoader loader;
@@ -14,11 +15,13 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     public static StrawbertBehavior strawbert;
 
     SpriteRenderer sr;
+    private PlayerInputActions playerInputActions;
 
     void Awake() {
         GameObject player = GameObject.FindWithTag("Player");
         strawbert = player.GetComponent<StrawbertBehavior>();
         sr = srTemp;
+        playerInputActions = InputManager.inputActions;
     }
 
     public void DoPrimary() {
@@ -30,7 +33,7 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     }
 
     public void DoSecondary() {
-        if (Input.GetKey(KeyCode.Mouse1))
+        if (Mouse.current.rightButton.wasPressedThisFrame)
         {
             rotation.RotateSpringleaf(true);
         }

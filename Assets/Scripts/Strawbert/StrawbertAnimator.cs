@@ -5,13 +5,20 @@ using UnityEngine;
 public class StrawbertAnimator : MonoBehaviour {
     [SerializeField] Animator animator;
 
+    private PlayerInputActions playerInputActions;
+
+    private void Awake()
+    {
+        playerInputActions = InputManager.inputActions;
+    }
+
     void Update() {
-        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0) {
+        if (playerInputActions.Player.Movement.ReadValue<Vector2>().x == 0 && playerInputActions.Player.Movement.ReadValue<Vector2>().y == 0) {
             SetAnimatorBool("Moving", false);
         } else {
             SetAnimatorBool("Moving", true);
-            SetAnimatorFloat("InputX", Input.GetAxisRaw("Horizontal"));
-            SetAnimatorFloat("InputY", Input.GetAxisRaw("Vertical"));
+            SetAnimatorFloat("InputX", playerInputActions.Player.Movement.ReadValue<Vector2>().x);
+            SetAnimatorFloat("InputY", playerInputActions.Player.Movement.ReadValue<Vector2>().y);
         }
     }
 

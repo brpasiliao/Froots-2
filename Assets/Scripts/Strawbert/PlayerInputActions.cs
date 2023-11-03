@@ -62,6 +62,42 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Option1"",
+                    ""type"": ""Button"",
+                    ""id"": ""fddee653-555e-422e-b010-4413f9708509"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Option2"",
+                    ""type"": ""Button"",
+                    ""id"": ""80831f05-693a-413d-864d-11d2c3e78229"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Option3"",
+                    ""type"": ""Button"",
+                    ""id"": ""410f0f62-60ae-4b18-83fc-b96fd372171c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Option4"",
+                    ""type"": ""Button"",
+                    ""id"": ""81bdb4e3-5b51-47dd-8c65-77be104f8c3a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -185,6 +221,61 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""SecondaryMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""44a51093-4c5a-448c-bc2e-acbd0d5aa0b5"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SecondaryMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""463c5b68-3901-4197-a5b0-7c8f23aac045"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Option1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""38a1f89f-499c-4ac6-a04e-f277213e60b3"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Option2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edd3cbbb-01e0-4783-88ba-0a21f79b1b0b"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Option3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdecd8e1-a330-4eab-9a4e-4adbdc8b4da0"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Option4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -225,11 +316,33 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f11e90ea-821b-42f0-8b8d-e8890eb6ecda"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Grasso"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""64ce0535-0379-4638-a6f0-4687dc58d561"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
+                    ""action"": ""GrassoDirection"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fcadf76d-fe62-49fd-86e8-7b4ebdaa414b"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""GrassoDirection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -274,7 +387,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d55820bc-b40f-4501-a190-61df8af67942"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -391,6 +504,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_SecondaryMovement = m_Player.FindAction("SecondaryMovement", throwIfNotFound: true);
         m_Player_PrimaryAction = m_Player.FindAction("Primary Action", throwIfNotFound: true);
         m_Player_SecondaryAction = m_Player.FindAction("Secondary Action", throwIfNotFound: true);
+        m_Player_Option1 = m_Player.FindAction("Option1", throwIfNotFound: true);
+        m_Player_Option2 = m_Player.FindAction("Option2", throwIfNotFound: true);
+        m_Player_Option3 = m_Player.FindAction("Option3", throwIfNotFound: true);
+        m_Player_Option4 = m_Player.FindAction("Option4", throwIfNotFound: true);
         // GrassoAimV1
         m_GrassoAimV1 = asset.FindActionMap("GrassoAimV1", throwIfNotFound: true);
         m_GrassoAimV1_Grasso = m_GrassoAimV1.FindAction("Grasso", throwIfNotFound: true);
@@ -468,6 +585,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SecondaryMovement;
     private readonly InputAction m_Player_PrimaryAction;
     private readonly InputAction m_Player_SecondaryAction;
+    private readonly InputAction m_Player_Option1;
+    private readonly InputAction m_Player_Option2;
+    private readonly InputAction m_Player_Option3;
+    private readonly InputAction m_Player_Option4;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -476,6 +597,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @SecondaryMovement => m_Wrapper.m_Player_SecondaryMovement;
         public InputAction @PrimaryAction => m_Wrapper.m_Player_PrimaryAction;
         public InputAction @SecondaryAction => m_Wrapper.m_Player_SecondaryAction;
+        public InputAction @Option1 => m_Wrapper.m_Player_Option1;
+        public InputAction @Option2 => m_Wrapper.m_Player_Option2;
+        public InputAction @Option3 => m_Wrapper.m_Player_Option3;
+        public InputAction @Option4 => m_Wrapper.m_Player_Option4;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -497,6 +622,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SecondaryAction.started += instance.OnSecondaryAction;
             @SecondaryAction.performed += instance.OnSecondaryAction;
             @SecondaryAction.canceled += instance.OnSecondaryAction;
+            @Option1.started += instance.OnOption1;
+            @Option1.performed += instance.OnOption1;
+            @Option1.canceled += instance.OnOption1;
+            @Option2.started += instance.OnOption2;
+            @Option2.performed += instance.OnOption2;
+            @Option2.canceled += instance.OnOption2;
+            @Option3.started += instance.OnOption3;
+            @Option3.performed += instance.OnOption3;
+            @Option3.canceled += instance.OnOption3;
+            @Option4.started += instance.OnOption4;
+            @Option4.performed += instance.OnOption4;
+            @Option4.canceled += instance.OnOption4;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -513,6 +650,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SecondaryAction.started -= instance.OnSecondaryAction;
             @SecondaryAction.performed -= instance.OnSecondaryAction;
             @SecondaryAction.canceled -= instance.OnSecondaryAction;
+            @Option1.started -= instance.OnOption1;
+            @Option1.performed -= instance.OnOption1;
+            @Option1.canceled -= instance.OnOption1;
+            @Option2.started -= instance.OnOption2;
+            @Option2.performed -= instance.OnOption2;
+            @Option2.canceled -= instance.OnOption2;
+            @Option3.started -= instance.OnOption3;
+            @Option3.performed -= instance.OnOption3;
+            @Option3.canceled -= instance.OnOption3;
+            @Option4.started -= instance.OnOption4;
+            @Option4.performed -= instance.OnOption4;
+            @Option4.canceled -= instance.OnOption4;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -716,6 +865,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnSecondaryMovement(InputAction.CallbackContext context);
         void OnPrimaryAction(InputAction.CallbackContext context);
         void OnSecondaryAction(InputAction.CallbackContext context);
+        void OnOption1(InputAction.CallbackContext context);
+        void OnOption2(InputAction.CallbackContext context);
+        void OnOption3(InputAction.CallbackContext context);
+        void OnOption4(InputAction.CallbackContext context);
     }
     public interface IGrassoAimV1Actions
     {
