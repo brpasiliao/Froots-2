@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class StrawbertGrasso : MonoBehaviour {
+public class StrawbertGrasso : MonoBehaviour
+{
     [SerializeField] StrawbertBehavior strawbert;
     [SerializeField] GameObject target;
+    [SerializeField] GameObject flower;
     [SerializeField] public float rotationSpeed;
 
     public PlayerInputActions playerInputActions;
@@ -26,40 +28,53 @@ public class StrawbertGrasso : MonoBehaviour {
         InputManager.ChangeGrassoControls(playerInputActions.GrassoAimV1);
     }
 
-    void Update() {
+    void Update()
+    {
 
-        if (playerInputActions.Player.Option1.triggered) {
+        if (playerInputActions.Player.Option1.triggered)
+        {
             EventBroker.CallSendFeedback("Hold right trigger + left stick aim");
             InputManager.ChangeGrassoControls(playerInputActions.GrassoAimV1);
-        } else if (playerInputActions.Player.Option2.triggered) {
+        }
+        else if (playerInputActions.Player.Option2.triggered)
+        {
             EventBroker.CallSendFeedback("Hold right trigger + right stick aim");
             InputManager.ChangeGrassoControls(playerInputActions.GrassoAimV2);
-        } else if (playerInputActions.Player.Option3.triggered) {
+        }
+        else if (playerInputActions.Player.Option3.triggered)
+        {
             EventBroker.CallSendFeedback("Tap X + right stick aim");
             InputManager.ChangeGrassoControls(playerInputActions.GrassoAimV3);
-        } else if (playerInputActions.Player.Option4.triggered) {
+        }
+        else if (playerInputActions.Player.Option4.triggered)
+        {
             EventBroker.CallSendFeedback("Move mouse");
         }
 
-        if (canGrasso && (PressedButtonToAim())){
+        if (canGrasso && (PressedButtonToAim()))
+        {
             StartCoroutine("UseGrasso");
         }
     }
 
-    IEnumerator UseGrasso() {
+    IEnumerator UseGrasso()
+    {
         SwingGrasso();
-        
+
         yield return 0;
-        while (!PressedButtonToShoot()) { 
-            
-            if (Keyboard.current.spaceKey.isPressed) {
+        while (!PressedButtonToShoot())
+        {
+
+            if (Keyboard.current.spaceKey.isPressed)
+            {
                 mouseControl = true;
             }
 
             AimGrassoMouse(mouseControl);
             AimGrassoJoystick(mouseControl);
 
-            if (playerInputActions.Player.SecondaryAction.triggered) {
+            if (playerInputActions.Player.SecondaryAction.triggered)
+            {
                 mouseControl = false;
                 EndGrasso();
             }
@@ -70,14 +85,16 @@ public class StrawbertGrasso : MonoBehaviour {
         ShootGrasso();
     }
 
-    private void SwingGrasso() {
+    private void SwingGrasso()
+    {
         canGrasso = false;
         target.SetActive(true);
-        strawbert.flower.SetObjectActive(true);
+        flower.SetActive(true);
         strawbert.animator.SetAnimatorBool("Swinging", true);
     }
 
-    private void AimGrassoJoystick(bool mouseInUse) {
+    private void AimGrassoJoystick(bool mouseInUse)
+    {
 
         if (mouseInUse)
         {
@@ -92,7 +109,8 @@ public class StrawbertGrasso : MonoBehaviour {
         }
     }
 
-    private void AimGrassoMouse(bool mouseInUse) {
+    private void AimGrassoMouse(bool mouseInUse)
+    {
         if (!mouseInUse)
         {
             return;
@@ -108,15 +126,15 @@ public class StrawbertGrasso : MonoBehaviour {
         }
     }
 
-    private void ShootGrasso() {
+    private void ShootGrasso()
+    {
         strawbert.movement.canMove = false;
         strawbert.movement.StopMovement();
         strawbert.animator.SetAnimatorBool("Shooting", true);
-        strawbert.flower.Shoot();
-        // EndGrasso();
     }
 
-    public void EndGrasso() {
+    public void EndGrasso()
+    {
         StopCoroutine("UseGrasso");
         target.SetActive(false);
 
@@ -185,7 +203,8 @@ public class StrawbertGrasso : MonoBehaviour {
         float xInputRaw = inputVector.x; //Input.GetAxisRaw(xAxis);
         float yInputRaw = inputVector.y; //Input.GetAxisRaw(yAxis);
 
-        if (xInputRaw != 0 || yInputRaw != 0) {
+        if (xInputRaw != 0 || yInputRaw != 0)
+        {
             xInput = xInputRaw;
             yInput = yInputRaw;
         }

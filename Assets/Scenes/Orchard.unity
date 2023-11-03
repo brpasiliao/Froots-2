@@ -552,6 +552,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   strawbert: {fileID: 848831553}
   col: {fileID: 41418649}
+  rb: {fileID: 0}
+  shootForce: 0
 --- !u!114 &41418651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9430,6 +9432,7 @@ MonoBehaviour:
   movement: {fileID: 848831560}
   grasso: {fileID: 848831559}
   animator: {fileID: 848831552}
+  flower: {fileID: 0}
 --- !u!50 &848831554
 Rigidbody2D:
   serializedVersion: 4
