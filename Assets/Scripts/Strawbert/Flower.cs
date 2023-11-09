@@ -13,7 +13,8 @@ public class Flower : MonoBehaviour {
     [SerializeField] StrawbertBehavior strawbert; 
     [SerializeField] Collider col;
     [SerializeField] Rigidbody rb;
-    [SerializeField] float shootForce;
+    [SerializeField] float grassoSpeed;
+    [SerializeField] float hitSpeed;
     [SerializeField] float velocityThreshold;
 
     [SerializeField] float minReach;
@@ -21,7 +22,8 @@ public class Flower : MonoBehaviour {
 
     private FlowerState currentState;
 
-    private Vector3 flowerForce;
+    private Vector3 grassoAngle;
+    private Vector3 grassoVelocity;
     private bool isShooting = false;
     private bool isMoving = false;
     private bool wasMoving = false;
@@ -52,19 +54,19 @@ public class Flower : MonoBehaviour {
     public void StartShoot() {
         col.enabled = true;
         rb.constraints = RigidbodyConstraints.None;
-        flowerForce = new Vector3(strawbert.grasso.xInput, 0, strawbert.grasso.yInput);
-        flowerForce = flowerForce * shootForce * 0.1f;
+        grassoAngle = new Vector3(strawbert.grasso.input.x, 0, strawbert.grasso.input.y);
+        grassoVelocity = grassoAngle * grassoSpeed * 10f;
 
         currentState = FlowerState.Shooting;
     }
 
     public void StartRetract() {
-        flowerForce = -flowerForce;
+        grassoVelocity = -grassoVelocity;
         currentState = FlowerState.Retracting;
     }
 
     public void Shoot() {
-        rb.AddForce(flowerForce, ForceMode.Acceleration);
+        rb.AddForce(grassoVelocity, ForceMode.Acceleration);
     }
 
     public void EndShoot() {
@@ -78,9 +80,14 @@ public class Flower : MonoBehaviour {
     }
    
     private void OnTriggerEnter(Collider other) {
-        if (other.isTrigger && other.TryGetComponent<IGrabbable>(out IGrabbable grabbed)) {
+        if (other.TryGetComponent<Acorn>(out Acorn acorn)) {
+            StartRetract();
+            acorn.GetHit(grassoAngle, hitSpeed);
+        } else if (other.isTrigger && other.TryGetComponent<IGrabbable>(out IGrabbable grabbed)) {
             EndShoot();
             grabbed.GetGrabbed();
+        } else if (!other.isTrigger) {
+            StartRetract();
         }
     }
 

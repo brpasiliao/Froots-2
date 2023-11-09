@@ -10,8 +10,11 @@ public class StrawbertGrasso : MonoBehaviour {
     public bool canGrasso { get; set; } = true;
 
     string currentGrassoAim = "GrassoAimV1";
-    public float xInput = 0;
-    public float yInput = 1f;
+    public Vector2 input;
+
+    void Awake() {
+        input = new Vector2(0, 1f);
+    }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
@@ -68,16 +71,16 @@ public class StrawbertGrasso : MonoBehaviour {
             SetJoystickInput("Right Horizontal", "Right Vertical");
         }
 
-        float angle = Mathf.Atan2(yInput, xInput) * Mathf.Rad2Deg * -1;
+        float angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg * -1;
         target.transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
     }
 
     private void AimGrassoMouse() {
         Vector3 mousePos = Input.mousePosition;
         Vector3 targetPos = Camera.main.WorldToScreenPoint(target.transform.position);
-        xInput = mousePos.x - targetPos.x;
-        yInput = mousePos.y - targetPos.y;
-        float angle = Mathf.Atan2(yInput, xInput) * Mathf.Rad2Deg * -1;
+        input = new Vector2(mousePos.x - targetPos.x, mousePos.y - targetPos.y);
+        input.Normalize();
+        float angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg * -1;
         target.transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
     }
 
@@ -133,8 +136,7 @@ public class StrawbertGrasso : MonoBehaviour {
         float yInputRaw = Input.GetAxisRaw(yAxis);
 
         if (xInputRaw != 0 || yInputRaw != 0) {
-            xInput = xInputRaw;
-            yInput = yInputRaw;
+            input = new Vector2(xInputRaw, yInputRaw);
         }
     }
 }

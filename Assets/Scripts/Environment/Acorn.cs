@@ -183,6 +183,11 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable, IHideable {
         SetObjectActive(false);
     }
 
+    public void GetHit(Vector3 angle, float speed) {
+        Vector3 velocity = angle * speed;
+        rb.AddForce(velocity, ForceMode.Impulse);
+    }
+
     public void SetObjectActive(bool setting) {
         gameObject.SetActive(setting);
     }
