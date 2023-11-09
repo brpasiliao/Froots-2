@@ -11,6 +11,5 @@ public class Post : MonoBehaviour, IGrabbable {
 
     public void GetGrabbed() {
         strawbert.transform.position = transform.position;
-        strawbert.grasso.EndGrasso();
     }
 }

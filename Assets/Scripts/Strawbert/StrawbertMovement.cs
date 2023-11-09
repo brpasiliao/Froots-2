@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StrawbertMovement : MonoBehaviour {
-    [SerializeField] Rigidbody2D rb;
+    [SerializeField] Rigidbody rb;
     [SerializeField] float movementSpeed;
 
     private PlayerInputActions playerInputActions;
@@ -14,8 +14,7 @@ public class StrawbertMovement : MonoBehaviour {
 
     public bool canMove { get; set; } = true;
 
-    private void Awake()
-    {
+    private void Awake() {
         playerInputActions = InputManager.inputActions;
 
     }
@@ -32,13 +31,13 @@ public class StrawbertMovement : MonoBehaviour {
     }
 
     void Move() {
-            Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
-            Vector2 destination = new Vector2(inputVector.x, inputVector.y);
-            rb.velocity = destination.normalized * movementSpeed;
+        Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
+        Vector3 destination = new Vector3(inputVector.x, 0, inputVector.y);
+        rb.velocity = destination.normalized * movementSpeed;
     }
 
     public void StopMovement() {
-        rb.velocity = Vector2.zero;
+        rb.velocity = Vector3.zero;
     }
 
     public void FindClosestObject() {

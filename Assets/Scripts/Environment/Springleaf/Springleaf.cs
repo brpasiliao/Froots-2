@@ -14,6 +14,9 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
     [SerializeField] SpriteRenderer srTemp;
     public static StrawbertBehavior strawbert;
 
+    public Vector3 launchAngle;
+    public float launchMultiplier;
+
     SpriteRenderer sr;
     private PlayerInputActions playerInputActions;
 
@@ -55,7 +58,6 @@ public class Springleaf : MonoBehaviour, IInteractable, IGrabbable {
 
     public void GetGrabbed() {
         strawbert.transform.position = transform.position;
-        strawbert.grasso.EndGrasso();
     }
 
     public void StallStrawbert(List<string> dialogue) {

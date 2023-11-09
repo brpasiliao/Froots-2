@@ -41,9 +41,14 @@ public class SpringleafLoader : MonoBehaviour {
 
     public void ReloadAcorn() {
         acornLoaded = true;
-        springleaf.acorn.SetObjectActive(false);
-        springleaf.launcher.SetAcornAnimationActive(true);
+        springleaf.acorn.Reload();
 
         EventBroker.CallSendFeedback(reloadedAcorn);
+    }
+
+    public void Reset() {
+        acornAssigned = false;
+        acornLoaded = false;
+        springleaf.acorn = null;
     }
 }

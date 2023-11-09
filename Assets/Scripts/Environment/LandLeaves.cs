@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class LandLeaves : MonoBehaviour {
     [SerializeField] GameObject hidden;
+    [SerializeField] Collider solidCollider;
 
-    public void Break() {
-        hidden.SetActive(true);
+    public void StartBreak() {
+        solidCollider.enabled = false;
+    }
+
+    public void EndBreak() {
+        IHideable hideable = hidden.GetComponent<IHideable>();
+        hideable.Reveal();
         gameObject.SetActive(false);
+    }
+
+    public void Restore() {
+        solidCollider.enabled = true;
     }
 }
