@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
-// using System.Numerics;
 using UnityEngine;
-// using Vector3 = UnityEngine.Vector3;
 
 public enum Direction {
     up, right, down, left
@@ -11,21 +9,18 @@ public enum Direction {
 
 public class SpringleafRotation : MonoBehaviour {
     [SerializeField] Springleaf springleaf;
-    [SerializeField] GameObject acornPivot;
-    [SerializeField] GameObject acornAnimation;
     [SerializeField] GameObject targetPivot;
     [SerializeField] GameObject target;
     [SerializeField] GameObject flower;
     [SerializeField] Direction direction = Direction.right;
 
     public PlayerInputActions playerInputActions;
-    private float xInput;
-    private float yInput;
+    public Vector2 input;
     private bool onKeyboard;
 
-    private void Awake()
-    {
+    private void Awake() {
         playerInputActions = InputManager.inputActions;
+        input = new Vector2(0, 1f);
     }
 
     void Start() {
@@ -58,41 +53,24 @@ public class SpringleafRotation : MonoBehaviour {
     }
 
     public void RotateTarget() {
-        Vector3 mousePos = playerInputActions.Player.SecondaryMovement.ReadValue<Vector2>();
-        Vector3 targetPos = targetPivot.transform.position;
-        Vector3 targetScreenPos = Camera.main.WorldToScreenPoint(targetPos);
-        mousePos.x = mousePos.x - targetScreenPos.x;
-        mousePos.y = mousePos.y - targetScreenPos.y;
-        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+        if (onKeyboard) {
+            Vector3 mousePos = playerInputActions.Player.SecondaryMovement.ReadValue<Vector2>();
+            Vector3 targetPos = targetPivot.transform.position;
+            Vector3 targetScreenPos = Camera.main.WorldToScreenPoint(targetPos);
+            input = new Vector2(mousePos.x - targetScreenPos.x, mousePos.y - targetScreenPos.y);
+            input.Normalize();
+
+        } else {    //Joystick Controls
+            Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
+            
+            if (inputVector != Vector2.zero) {
+                input = inputVector;
+            }
+        }
+        
+        float angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg * -1;
         Quaternion eulerAngle = Quaternion.Euler(new Vector3(0, angle, 0));
-
-        //Joystick Controls
-        Vector2 inputVector = playerInputActions.Player.Movement.ReadValue<Vector2>();
-
-        float xInputRaw = inputVector.x; //Input.GetAxisRaw(xAxis);
-        float yInputRaw = inputVector.y; //Input.GetAxisRaw(yAxis);
-
-
-
-        if (xInputRaw != 0 || yInputRaw != 0)
-        {
-            xInput = xInputRaw;
-            yInput = yInputRaw;
-        }
-
-        float joyStickAngle = Mathf.Atan2(yInput, xInput) * Mathf.Rad2Deg;
-        Quaternion eulerJoyStickAngle = Quaternion.Euler(new Vector3(0, 0, joyStickAngle));
-
-        if (!onKeyboard)
-        {
-            acornPivot.transform.rotation = eulerJoyStickAngle;
-            targetPivot.transform.rotation = eulerJoyStickAngle;
-        }
-        else if(onKeyboard)
-        {
-            acornPivot.transform.rotation = eulerAngle;
-            targetPivot.transform.rotation = eulerAngle;
-        }
+        targetPivot.transform.rotation = eulerAngle;
     }
     
     void ChangeDirection(Direction newDirection) {
@@ -111,10 +89,7 @@ public class SpringleafRotation : MonoBehaviour {
 
     void SetTargetDistance() {
         float distance = SpringleafSingleton.instance.targetDistance;
-        acornPivot.transform.localScale = new Vector3(distance, 1, 1);
-        acornAnimation.transform.localScale = new Vector3(1/distance, 1, 1);
         targetPivot.transform.localScale = new Vector3(distance, 1, 1);
-        // target.transform.localScale = new Vector3(1/distance, 1, 1);
         target.transform.localScale = new Vector3(0.05f, 0.15f, 0.15f);
     }
 

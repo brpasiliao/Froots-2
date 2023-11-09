@@ -143,8 +143,8 @@ public class Acorn : MonoBehaviour, IInteractable, ITaggable, IHideable {
         col.enabled = true;
         rb.constraints = RigidbodyConstraints.None;
         
-        // translate angle to x,z coordinates
-        Vector3 force = springleaf.launchAngle * springleaf.launchMultiplier;
+        Vector3 force = new Vector3(springleaf.rotation.input.x * springleaf.launchDistanceMultiplier, springleaf.launchHeight, springleaf.rotation.input.y * springleaf.launchDistanceMultiplier);
+        // Vector3 force = springleaf.launchAngle * springleaf.launchMultiplier;
         rb.AddForce(force, ForceMode.Impulse);
 
         isLaunching = true;
