@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class StrawbertGrasso : MonoBehaviour {
     [SerializeField] StrawbertBehavior strawbert;
     [SerializeField] GameObject target;
-    [SerializeField] GameObject flower;
+    // [SerializeField] GameObject flower;
     [SerializeField] public float rotationSpeed;
 
     public PlayerInputActions playerInputActions;
@@ -75,7 +75,7 @@ public class StrawbertGrasso : MonoBehaviour {
     private void SwingGrasso() {
         canGrasso = false;
         target.SetActive(true);
-        flower.SetActive(true);
+        // flower.SetActive(true);
         strawbert.animator.SetAnimatorBool("Swinging", true);
     }
 
@@ -131,7 +131,6 @@ public class StrawbertGrasso : MonoBehaviour {
         return false;
     }
 
-
     bool PressedButtonToShoot() {
         if ((playerInputActions.GrassoAimV1.enabled &&
             playerInputActions.GrassoAimV1.Grasso.WasReleasedThisFrame()) ||
@@ -145,7 +144,6 @@ public class StrawbertGrasso : MonoBehaviour {
 
         return false;
     }
-
 
     void SetJoystickInput() {
         Vector2 inputVector;
@@ -161,7 +159,7 @@ public class StrawbertGrasso : MonoBehaviour {
             Debug.Log("No input available");
         }
 
-        if (xInputRaw != 0 || yInputRaw != 0) {
+        if (inputVector != Vector2.zero) {
             input = inputVector;
         }
     }

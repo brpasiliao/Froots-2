@@ -11,17 +11,9 @@ public class StrawbertBehavior : MonoBehaviour {
 
     [SerializeField] PlayerInputActions playerInputActions;
 
-    private void Awake()
-    {
+    private void Awake() {
         movement = gameObject.GetComponent<StrawbertMovement>();
         playerInputActions = InputManager.inputActions;
-    }
-    void Update() {
-        /*if (Input.GetButtonDown("Primary")) {
-            PrimaryAction();
-        } else if (Input.GetButtonDown("Secondary")) {
-            SecondaryAction();
-        }*/
     }
 
     private void OnEnable() {
